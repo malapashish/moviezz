@@ -20,7 +20,23 @@ header {
   background-color: #373b69;
   padding: 1rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
+  /* justify-content: flex-end; */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0.4rem 1.5rem;
+  position: relative;
+}
+
+.nav-link .logo {
+  position: absolute;
+  width: 150px;
+  top: -9px;
+  left: -90px;
 }
 
 .movie-container {
@@ -51,6 +67,12 @@ header {
   position: relative;
   margin: 1rem;
   width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.movie:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .movie-img {
@@ -62,6 +84,54 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+}
+
+.heart_icon {
+  cursor: pointer;
+  padding: 10px 12px 10px;
+  background: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  top: 20px;
+  right: 20px;
+  color: #aaa;
+  transition: 0.2s;
+  position: absolute;
+}
+
+.delete_icon {
+  cursor: pointer;
+  /* padding: 10px; */
+  /* background: #fff; */
+  border-radius: 60%;
+  display: inline-block;
+  top: 20px;
+  font-size: 30px;
+  right: 20px;
+  color: #aaa;
+  transition: 0.2s;
+  position: absolute;
+}
+
+.delete_icon:before {
+  font-family: fontawesome;
+  content: "\f1f8";
+  font-style: normal;
+}
+.delete_icon:hover {
+  animation: size 0.4s;
+  color: #e23b3b;
+}
+
+.heart_icon:before {
+  font-family: fontawesome;
+  content: "\f004";
+  font-style: normal;
+}
+
+.heart_icon.pressed {
+  animation: size 0.4s;
+  color: #e23b3b;
 }
 
 .movie_info h3 {
@@ -107,3 +177,48 @@ header {
 .tag.red {
   color: red;
 }
+
+.snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: rgba(0, 255, 200, 0.8); /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+} */
