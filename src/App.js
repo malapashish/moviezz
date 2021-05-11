@@ -3,12 +3,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
 import Home from './Pages/Home';
 import Favourites from './Pages/Favourites';
+import MovieDetails from './Pages/MovieDetails';
 const App = () => { 
     return(
         <BrowserRouter>
             <Switch>
-                <Route path = "/" component = {Home} exact />
+                <Route exact path = "/" component = {Home} />
                 <Route path = "/fav" component = {Favourites} />
+                <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
             </Switch>
         </BrowserRouter>
     )

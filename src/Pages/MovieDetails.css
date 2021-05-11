@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.hero-image {
+  width: 100%;
+  height: 45vh;
+  object-fit: cover;
+  /* margin: 0; */
+}
+
+.second-section {
+  position: relative;
+  background-color: #22254b;
+  padding: 0;
+  margin: 0;
+  margin-top: -10px;
+  height: 45vh;
+}
+
+.poster-image {
+  position: absolute;
+  top: -90px;
+  width: 250px;
+  height: 400px;
+  left: 40px;
+  border-radius: 40px;
+}
+
+.content-container {
+  position: relative;
+  top: 10px;
+  left: 330px;
+  width: 60%;
+  color: white;
+}
+
+.content-container h3 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.summary-title {
+  font-size: 15px;
+}
+
+.summary-content {
+  font-size: 14px;
+}
+
+.stats-section {
+  margin-top: 10px;
+  position: relative;
+}
+
+.release-date {
+  position: absolute;
+}
+
+.see_trailler {
+  position: absolute;
+  top: 10px;
+  left: 700px;
+}
+
+.voting-average {
+  left: 350px;
+  position: absolute;
+}
+
+.tag .organge {
+  color: orange;
+}
+
+.tag .red {
+  color: red;
+}
+
+.tag .green {
+  color: green;
+}

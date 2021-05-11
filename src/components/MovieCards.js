@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react'; 
-
 import db from '../config/firebase';
+import { Link } from 'react-router-dom';
 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
@@ -66,6 +66,11 @@ const MovieCards = (props) => {
                 <span className = {`tag ${setVoteClass(props.vote_average)}`} >{props.vote_average}</span>
                 <i className = {`heart_icon ${checkifLiked(props.title)}`} onClick = {likeHandler}></i>
             </div> 
+            <Link className = 'read-more' to = {'/moviedetails/' + props.title} >
+                <button className = 'button read-more-button'>
+                    Read More..
+                </button> 
+            </Link>
         </div>
     )
 }

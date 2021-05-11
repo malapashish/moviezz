@@ -155,6 +155,10 @@ header {
   box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.1);
 }
 
+.read-more {
+  padding: 0px 0px 20px 20px;
+}
+
 .movie:hover .movie-overview {
   transform: translateY(0%);
 }
@@ -176,6 +180,34 @@ header {
 
 .tag.red {
   color: red;
+}
+
+.button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  font-family: "Poppins", sans-serif;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 100px;
+  border-radius: 10px;
+}
+
+.read-more-button {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  border: 2px solid #f44336;
+}
+
+.read-more-button:hover {
+  background-color: #f44336;
+  color: white;
 }
 
 .snackbar {
