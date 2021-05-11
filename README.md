@@ -17,15 +17,15 @@ The project is simple movies recommendation app created using react. For backend
 
 Home Page 
 
-![Home Page]
+![Home Page](images/Home.PNG)
 
-Favourite Page
+Favourites Page
 
-![Login Page](images/Loginpage.PNG)
+![Favourite_Page](images/feavourities.PNG)
 
-Detailed Movie Page
+Detailed Movies Page
 
-![Chat Page](images/chat.PNG)
+![Detailed_Movies_Page](images/single.PNG)
 
 ## Technologies
 * React - version 17.0.2
