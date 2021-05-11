@@ -41,18 +41,12 @@ const FeavouritesCards = (props) => {
         }
     }
 
-    // const checkifLiked = (title) =>{
-    //     if(selectedMovies.some((movie) => movie.title === title)){
-    //         return 'pressed';
-    //     }else{
-    //         return '';
-    //     }
-    // }
- 
+    
     
     const likeHandler = () =>{ 
         setIsLiked(true);
-        props.deleteFavourite(props)
+        props.deleteFavourite(props);
+        console.log(selectedMovies);
     }
 
     return(

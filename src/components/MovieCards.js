@@ -52,7 +52,8 @@ const MovieCards = (props) => {
     
     const likeHandler = () =>{ 
         setIsLiked(true);
-        props.handleFavourite(props)
+        props.handleFavourite(props);
+        console.log(isliked);
     }
 
     return(
