@@ -37,8 +37,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
         }
     }
 
-    const getYoutubeLink = () => {
-        console.log(movieDetails.id);
+    const getYoutubeLink = () => { 
         axios   
             .get(`https://api.themoviedb.org/3/movie/${movieDetails.id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
             .then((response) => {

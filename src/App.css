@@ -62,13 +62,15 @@ header {
 
 .movie {
   background-color: #373b69;
-  border-radius: 3px;
+  border-radius: 50px 50px 0px 0px;
   overflow: hidden;
   position: relative;
   margin: 1rem;
   width: 300px;
+  height: 600px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  padding-bottom: 0px;
 }
 
 .movie:hover {
@@ -76,14 +78,54 @@ header {
 }
 
 .movie-img {
-  max-width: 100%;
+  width: 100%;
+  height: 70%;
 }
 
+/* 
+.movie_info h3 {
+  font-size: 20px;
+} */
+
 .movie_info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
+  display: block;
+}
+
+.playbutton_icon {
+  width: 20%;
+  position: absolute;
+  margin-top: -40px;
+  right: 20px;
+}
+
+/* .movie_info h3 {
+  font-size: 15px;
+  padding-top: 0px;
+  padding-left: 20px;
+  width: 250px;
+} */
+
+.normal_title {
+  font-size: 18px;
+  padding-top: 15px;
+  padding-left: 20px;
+  width: 250px;
+}
+
+.small_title {
+  font-size: 15px;
+  padding-top: 0px;
+  padding-left: 20px;
+  width: 230px;
+}
+
+.rating {
+  padding: 5px 0px 5px 20px;
+  width: 200px;
+}
+
+.small_title ~ .rating {
+  padding-top: 5px;
 }
 
 .heart_icon {
@@ -157,6 +199,8 @@ header {
 
 .read-more {
   padding: 0px 0px 20px 20px;
+  position: absolute;
+  bottom: -10;
 }
 
 .movie:hover .movie-overview {
@@ -165,9 +209,10 @@ header {
 
 .tag {
   background-color: #22254b;
-  padding: 0.5rem;
+  padding: 0.2rem;
   font-weight: bold;
   border-radius: 5px;
+  margin-left: 10px;
 }
 
 .tag.green {
@@ -195,8 +240,9 @@ header {
   margin-bottom: 10px;
   transition-duration: 0.4s;
   cursor: pointer;
-  width: 100px;
+  width: 250px;
   border-radius: 10px;
+  margin-top: 15px;
 }
 
 .read-more-button {
