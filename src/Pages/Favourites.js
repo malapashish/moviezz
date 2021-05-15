@@ -1,7 +1,6 @@
 import React , {useState , useEffect} from 'react';
 
-import { Link } from 'react-router-dom';
-import Img from '../Group 1.png';
+import { Link } from 'react-router-dom'; 
 import '../App.css';
 import FeavouritesCards from '../components/FavouritesCard'
 
@@ -20,7 +19,8 @@ const Favourites = () => {
                        id : doc.id ,
                        title : doc.data().title , 
                         poster_path : doc.data().image_path,
-                       vote_average : doc.data().vote_average
+                       vote_average : doc.data().vote_average,
+                       movieId : doc.data().movieId
                    }))
                )
            }) 
@@ -45,28 +45,14 @@ const Favourites = () => {
 
     return(
         <>
-           <header>
-               <div>
-                <Link to = '/' className = 'nav-link'>
-                    <img src = {Img}  className = 'logo' alt = 'Logo ' />
-                </Link>
+           <header>   
                 <Link to = '/' className = 'nav-link'>
                     Home    
                 </Link>
                 <Link to = '/fav' className = 'nav-link'>
                     Feavourites
-                </Link>
-            </div>
-            {/* <form onSubmit = {handleOnSubmit}>
-            <input
-            className = 'search'
-            type = 'search'
-            placeholder = 'Search...'
-            value = {searchTerm}
-            onChange = {handleSearchTerm}
-            />
-            </form> */}
-           </header>
+                </Link> 
+            </header>
            <div className = 'movie-container'> 
             {
                 selectedMovies && selectedMovies.map((movie) => <FeavouritesCards key = {movie.id} {...movie} deleteFavourite = {deleteFavourite} />)

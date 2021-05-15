@@ -9,8 +9,10 @@ const App = () => {
         <BrowserRouter>
             <Switch>
                 <Route exact path = "/" component = {Home} />
+                <Route  path = '/movies'/>
                 <Route path = "/fav" component = {Favourites} />
                 <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
+                <Route path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
             </Switch>
         </BrowserRouter>
     )

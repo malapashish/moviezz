@@ -66,6 +66,22 @@ const MovieCards = (props) => {
         console.log(isliked);
     }
 
+    const checkWordLength = (input) => {
+        if(input.title){
+            if(input.title.length < 53){
+                return 'normal_title';
+            }else{
+                return 'small_title';
+            }
+        }else if(input.name){
+            if(input.name.length < 53){
+                return 'normal_title';
+            }else{
+                return 'small_title';
+            }
+        }
+    }
+
     return(
         <div className = 'movie'>
             {getYoutubeLink(props.id)}
@@ -80,15 +96,14 @@ const MovieCards = (props) => {
                 src = {Img}
                 />
                 </a> 
-                <h3 className = { props.title.length < 53 ? 'normal_title' : 'small_title' } >{props.title}</h3>
+                <h3 className = {checkWordLength(props)}>{props.title}</h3>
                 <p className = {`rating`} >
                     Rating:
                     <span className = {`tag ${setVoteClass(props.vote_average)}`} >{props.vote_average}</span> 
-                    </p>
-                {/* <StarRating /> */}
+                </p> 
                 <i className = {`heart_icon ${checkifLiked(props.title)}`} onClick = {likeHandler}></i>
             </div> 
-            <Link className = 'read-more' to = {'/moviedetails/' + props.title} >
+            <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
                 <button className = 'button read-more-button'>
                     Read More..
                 </button> 
