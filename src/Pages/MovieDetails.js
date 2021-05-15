@@ -3,12 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import './MovieDetails.css';
 import { Button } from "@material-ui/core";
-import YouTubeIcon from "@material-ui/icons/YouTube";
- 
+import YouTubeIcon from "@material-ui/icons/YouTube"; 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280'; 
 
 const MovieDetails = ({ match : { params : {id} } }) => {
-
+ 
     const [ movieDetails , setMovieDetails ] = useState([]);
     const [ video , setVideo ] = useState();
 
