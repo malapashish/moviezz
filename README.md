@@ -1,4 +1,4 @@
-# Chatz
+# Moviezz
 > A simple movies recommendation app created using React , Firebase , react-router-dom <br />
 > [Live Demo](https://ash-moviezz.netlify.app/)
 
