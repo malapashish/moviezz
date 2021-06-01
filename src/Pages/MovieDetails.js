@@ -1,6 +1,6 @@
 import React , {useEffect, useState} from 'react';
 import axios from 'axios';
-import { NavLink , Link } from 'react-router-dom'; 
+import { NavLink } from 'react-router-dom'; 
 import './MovieDetails.css';
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube"; 
