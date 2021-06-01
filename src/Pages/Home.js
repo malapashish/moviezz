@@ -98,12 +98,7 @@ const Home = () => {
             <>
                 <NavLink exact to = '/' className = 'nav-link ' activeClassName = 'active'>
                     Home    
-                </NavLink>
-                {/* <IconContext.Provider value={{ color: "blue", className: "global-class-name" , size : '50px' }}>
-                <div onClick = {iconClick}>
-                    <BsJustify />
-                </div>
-                </IconContext.Provider> */}
+                </NavLink> 
                 <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
                     Feavourites
                 </NavLink> 
@@ -128,7 +123,7 @@ const Home = () => {
         </nav>
 
         <span className = 'page-heading'> 
-        <i class="fas fa-fire"></i>   
+        <i className="fas fa-fire"></i>   
             Trending
         </span>
         <div className = 'movie-container'>      
