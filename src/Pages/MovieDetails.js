@@ -1,6 +1,6 @@
 import React , {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; 
+import { NavLink , Link } from 'react-router-dom'; 
 import './MovieDetails.css';
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube"; 
@@ -43,14 +43,31 @@ const MovieDetails = ({ match : { params : {id} } }) => {
 
     return(
         <>
-            <header>   
-                <Link to = '/' className = 'nav-link'>
+            <nav>   
+                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
                     Home    
-                </Link>
-                <Link to = '/fav' className = 'nav-link'>
+                </NavLink>
+                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
                     Feavourites
-                </Link> 
-            </header>
+                </NavLink> 
+                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
+                    Movies
+                </NavLink>
+                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
+                    Series
+                </NavLink>
+                {/* <div className = 'search-container'>
+                    <form onSubmit = {handleOnSubmit}>
+                    <input
+                    className = 'search'
+                    type = 'text'
+                    placeholder = 'Search...'
+                    value = {searchTerm}
+                    onChange = {handleSearchTerm}
+                    />
+                    </form>
+                </div> */}
+            </nav>
             {getYoutubeLink()}
             <div>
                 <img src={movieDetails.backdrop_path ?  IMG_API+movieDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 

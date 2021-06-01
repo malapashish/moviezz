@@ -1,6 +1,6 @@
 import React , { useState , useEffect } from 'react';
 import axios from 'axios'; 
-import { Link } from 'react-router-dom'
+import { Link , NavLink } from 'react-router-dom'
  
 import MovieCards from '../components/MovieCards';
 import CustomPagination from '../components/Pagination';
@@ -95,13 +95,19 @@ const Home = () => {
 
     return(
         <>
-        <header>   
-                <Link to = '/' className = 'nav-link'>
+        <nav>   
+                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
                     Home    
-                </Link>
-                <Link to = '/fav' className = 'nav-link'>
+                </NavLink>
+                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
                     Feavourites
-                </Link> 
+                </NavLink> 
+                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
+                    Movies
+                </NavLink>
+                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
+                    Series
+                </NavLink>
                 <div className = 'search-container'>
                     <form onSubmit = {handleOnSubmit}>
                     <input
@@ -113,7 +119,8 @@ const Home = () => {
                     />
                     </form>
                 </div>
-        </header>
+        </nav>
+
         <span className = 'page-heading'> 
         <i class="fas fa-fire"></i>   
             Trending

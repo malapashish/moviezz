@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from 'react';
 
-import { Link } from 'react-router-dom'; 
+import { NavLink } from 'react-router-dom'; 
 import '../App.css';
 import FeavouritesCards from '../components/FavouritesCard'
 
@@ -44,15 +44,21 @@ const Favourites = () => {
     },[])
 
     return(
-        <>
-           <header>   
-                <Link to = '/' className = 'nav-link'>
+        <>   
+            <nav>   
+                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
                     Home    
-                </Link>
-                <Link to = '/fav' className = 'nav-link'>
+                </NavLink>
+                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
                     Feavourites
-                </Link> 
-            </header>
+                </NavLink> 
+                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
+                    Movies
+                </NavLink>
+                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
+                    Series
+                </NavLink>
+            </nav>
            <div className = 'movie-container'> 
             {
                 selectedMovies && selectedMovies.map((movie) => <FeavouritesCards key = {movie.id} {...movie} deleteFavourite = {deleteFavourite} />)

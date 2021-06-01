@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Movie = () => {
+const Series = () => {
     return(
         <>
             <nav>   
@@ -18,12 +18,11 @@ const Movie = () => {
                     Series
                 </NavLink>
             </nav>
-
             <div>
-                Hello from movie page
+                Hello from Series component
             </div>
         </>
     )
 };
 
-export default Movie;
+export default Series;
