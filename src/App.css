@@ -2,6 +2,7 @@
 
 * {
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body {
@@ -41,10 +42,6 @@ nav {
 
 .active {
   color: #22254b;
-}
-
-nav .search-container {
-  /* float: right; */
 }
 
 nav input[type="text"] {
