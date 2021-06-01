@@ -1,8 +1,6 @@
 import React , { useState , useEffect } from 'react';
 import axios from 'axios'; 
-import { Link , NavLink } from 'react-router-dom'
-import { BsJustify } from 'react-icons/bs';
-import { IconContext } from "react-icons";
+import { NavLink } from 'react-router-dom' 
 
 import MovieCards from '../components/MovieCards';
 import CustomPagination from '../components/Pagination';
@@ -93,11 +91,7 @@ const Home = () => {
         }
 
     }
-
-    const  iconClick = () => {
-        console.log('Cliked');
-    }
-
+ 
     return(
         <>
         <nav>   
