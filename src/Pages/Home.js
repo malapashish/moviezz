@@ -1,7 +1,9 @@
 import React , { useState , useEffect } from 'react';
 import axios from 'axios'; 
 import { Link , NavLink } from 'react-router-dom'
- 
+import { BsJustify } from 'react-icons/bs';
+import { IconContext } from "react-icons";
+
 import MovieCards from '../components/MovieCards';
 import CustomPagination from '../components/Pagination';
 import LikeMessages from '../components/LikeMessages';
@@ -92,13 +94,22 @@ const Home = () => {
 
     }
 
+    const  iconClick = () => {
+        console.log('Cliked');
+    }
 
     return(
         <>
         <nav>   
-                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
+            <>
+                <NavLink exact to = '/' className = 'nav-link ' activeClassName = 'active'>
                     Home    
                 </NavLink>
+                {/* <IconContext.Provider value={{ color: "blue", className: "global-class-name" , size : '50px' }}>
+                <div onClick = {iconClick}>
+                    <BsJustify />
+                </div>
+                </IconContext.Provider> */}
                 <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
                     Feavourites
                 </NavLink> 
@@ -108,6 +119,7 @@ const Home = () => {
                 <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
                     Series
                 </NavLink>
+            </>
                 <div className = 'search-container'>
                     <form onSubmit = {handleOnSubmit}>
                     <input
