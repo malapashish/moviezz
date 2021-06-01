@@ -28,6 +28,7 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  overflow: hidden;
 }
 
 .nav-link {
