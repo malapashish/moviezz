@@ -20,6 +20,7 @@ const App = () => {
                 <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
                 <Route path = '/seriesdetails/:id' render = { props => <SeriesDetails {...props}  /> } />
                 <Route path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
+                <Route path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
             </Switch>
         </BrowserRouter>
     )

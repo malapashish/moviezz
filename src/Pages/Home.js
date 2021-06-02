@@ -83,7 +83,8 @@ const Home = () => {
                 movieId : input.id,
                 title : input.title || input.name,
                 vote_average : input.vote_average,
-                image_path : IMG_API + input.poster_path
+                image_path : IMG_API + input.poster_path,
+                media_type : input.media_type
             })
             setMessage('Added to the favourites');
             setTimeout(() => {
@@ -109,18 +110,7 @@ const Home = () => {
                 <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
                     Series
                 </NavLink>
-            </>
-                {/* <div className = 'search-container'>
-                    <form onSubmit = {handleOnSubmit}>
-                    <input
-                    className = 'search'
-                    type = 'text'
-                    placeholder = 'Search...'
-                    value = {searchTerm}
-                    onChange = {handleSearchTerm}
-                    />
-                    </form>
-                </div> */}
+            </> 
         </nav>
 
         <span className = 'page-heading'> 

@@ -16,11 +16,12 @@ const Favourites = () => {
             .onSnapshot((q) => {
                setSelectedMovies(
                    q.docs.map((doc) => ({
-                       id : doc.id ,
-                       title : doc.data().title , 
+                        id : doc.id ,
+                        title : doc.data().title , 
                         poster_path : doc.data().image_path,
-                       vote_average : doc.data().vote_average,
-                       movieId : doc.data().movieId
+                        vote_average : doc.data().vote_average,
+                        movieId : doc.data().movieId,
+                        media_type : doc.data().media_type
                    }))
                )
            }) 

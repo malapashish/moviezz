@@ -7,7 +7,7 @@ const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 
 const FeavouritesCards = (props) => {
-
+    console.log(props);
     const [ isliked , setIsLiked ] = useState(false);
     const [selectedMovies , setSelectedMovies] = useState([]);
 
@@ -27,7 +27,8 @@ const FeavouritesCards = (props) => {
                        title : doc.data().title , 
                         poster_path : doc.data().image_path,
                        vote_average : doc.data().vote_average,
-                       movieId : doc.data().movieId
+                       movieId : doc.data().movieId,
+                       media_type : doc.data().media_type
                    }))
                )
            }) 
@@ -79,11 +80,20 @@ const FeavouritesCards = (props) => {
                     <span className = {`tag ${setVoteClass(props.vote_average)}`} >{props.vote_average}</span> 
                 </p>
                 <i className = {`delete_icon ${ isliked ? 'pressed' : '' }`} onClick = {deleteHandler}></i>
-                <Link className = 'read-more' to = {'/moviedetails/' + props.movieId}>
-                <button className = 'button read-more-button'>
-                    Read More..
-                </button> 
-            </Link>
+                {
+                    props.media_type === 'movie' ?
+                    <Link className = 'read-more' to = {'/moviedetails/' + props.movieId}>
+                        <button className = 'button read-more-button'>
+                            Read More..
+                        </button> 
+                    </Link> :
+                    <Link className = 'read-more' to = {'/seriesdetails/' + props.movieId}>
+                        <button className = 'button read-more-button'>
+                            Read More..
+                        </button> 
+                    </Link>
+                }   
+                
             </div> 
         </div>
     )
