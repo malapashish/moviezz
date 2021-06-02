@@ -72,6 +72,13 @@
 }
 
 @media screen and (max-width: 600px) {
+  .movie-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .nav-link {
     border: 1px solid #22254b;
   }
