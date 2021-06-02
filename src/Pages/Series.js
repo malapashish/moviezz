@@ -1,7 +1,84 @@
-import React from 'react';
+import React , { useState } from 'react';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import db from '../config/firebase'; 
+import LikeMessages from '../components/LikeMessages';
+import Cards from '../components/Cards';
 
 const Series = () => {
+
+
+    const [ searchTerm , setSearchTerm ] = useState(''); 
+    const [ seriesList , setSeriesList ] = useState([]);
+    const [ favouriteContent , setFavouriteContent] = useState([]);
+    const [ repatedLiked , setRepatedLiked ] = useState(null); 
+    const [ message , setMessage ] = useState(null);
+
+    // https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=
+    const IMG_API = 'https://images.tmdb.org/t/p/w1280';
+    const SearchAPI = `https://api.themoviedb.org/3/search/tv?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&query=`
+    const getMovies = (API) => {
+        axios
+            .get(API)
+            .then((response) => { 
+                setSeriesList(response.data.results); 
+            })
+    }
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        if(searchTerm){
+        getMovies( SearchAPI + searchTerm )
+        setSearchTerm('');   
+        fetchSeriesList();
+        } 
+    }
+
+     
+
+    const handleSearchTerm = (e) => {
+        setSearchTerm(e.target.value);
+    }
+
+
+    const handleFavourite = (input) => {  
+        if(favouriteContent.some(movie => movie.title === input.title)){
+            setRepatedLiked(true); 
+            setTimeout(() => {
+                setRepatedLiked(null);
+            } , 500);
+        }else{
+            db
+            .collection('favourites')
+            .add({
+                movieId : input.id,
+                title : input.title || input.name,
+                vote_average : input.vote_average,
+                image_path : IMG_API + input.poster_path
+            })
+            setMessage('Added to the favourites');
+            setTimeout(() => {
+                setMessage(null);
+            } , 500)
+        }
+
+    }
+
+
+    const fetchSeriesList = () => {
+        db
+            .collection('favourites')
+            .onSnapshot((q) => {
+               setFavouriteContent(
+                   q.docs.map((doc) => ({
+                       id : doc.id ,
+                       title : doc.data().title , 
+                        poster_path : doc.data().image_path,
+                       vote_average : doc.data().vote_average
+                   }))
+               )
+           }) 
+    }
+
     return(
         <>
             <nav>   
@@ -18,9 +95,28 @@ const Series = () => {
                     Series
                 </NavLink>
             </nav>
-            <div>
-                Hello from Series component
+            <div className = 'wrap'>
+                <form onSubmit = {handleOnSubmit}>
+                    <input
+                    className = 'search'
+                    type = 'text'
+                    placeholder = 'Enter Series name Here'
+                    value = {searchTerm}
+                    onChange = {handleSearchTerm}
+                    />
+                    </form>
             </div>
+            <div className = 'movie-container'>
+                { seriesList && seriesList.map((series) => <Cards key = {series.id}  {...series}  media_type = 'tv' handleFavourite = {handleFavourite} />) }
+            </div>
+            <LikeMessages message = {message} />
+            {
+                repatedLiked && (
+                    <div className = 'snackbar show'>
+                        Already added in the favourites..
+                    </div>
+                )
+            }
         </>
     )
 };

@@ -14,7 +14,7 @@ const App = () => {
         <BrowserRouter>
             <Switch>
                 <Route exact path = "/" component = {Home} />
-                <Route  path = '/movies'component = {Movie} />
+                <Route  path = '/movies'component = {Movie} /> 
                 <Route path = '/series' component = {Series} />
                 <Route path = "/fav" component = {Favourites} />
                 <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />

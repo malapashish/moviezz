@@ -8,6 +8,7 @@ const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 const  Cards = (props) => { 
  
+    console.log(props);
 
     const [ isliked , setIsLiked ] = useState(false);
     const [selectedMovies , setSelectedMovies] = useState([]);
@@ -115,17 +116,17 @@ const  Cards = (props) => {
                 <i className = {`heart_icon ${checkifLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
             </div> 
                 {
-                    props.media_type === 'movie' ?
-                    <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
-                        <button className = 'button read-more-button'>
-                            Read More..
-                        </button> 
-                    </Link> :
+                    props.media_type === 'tv' ?
                     <Link className = 'read-more' to = {'/seriesdetails/' + props.id}>
                         <button className = 'button read-more-button'>
                             Read More..
                         </button> 
-                    </Link> 
+                    </Link> : 
+                    <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
+                        <button className = 'button read-more-button'>
+                            Read More..
+                        </button> 
+                    </Link>  
                 }
             
         </div>

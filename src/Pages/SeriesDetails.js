@@ -10,6 +10,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
  
     const [ seriesDetails , setSeriesDetails ] = useState([]);
     const [ video , setVideo ] = useState();
+    const [ linkAvailablity , setLinkAvailablity ] = useState();
 
     useEffect(() => {
        if(id){
@@ -19,6 +20,20 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                     setSeriesDetails(response.data); 
                     console.log(response.data);
                 }); 
+
+            axios   
+            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
+            .then((response) => { 
+                // setVideo(response.data.results[0].key)
+                console.log(response.data);
+                if(response.data.results.length !== 0){
+                    setVideo(response.data.results[0].key)
+                    setLinkAvailablity(true);
+                }else{
+                    setLinkAvailablity(false);
+                }
+            }) 
+            
         }
     },[id])
 
@@ -58,7 +73,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                     Series
                 </NavLink>
             </nav>
-            {getYoutubeLink()}
+            {/* { id && getYoutubeLink()} */}
             <div className = 'movie-details'>
                 <img src={seriesDetails.backdrop_path ?  IMG_API+seriesDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>
@@ -79,15 +94,19 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                 <p className = {`tag ${checkrating(seriesDetails.vote_average)}`} >{seriesDetails.vote_average}</p>
                             </section>
                             <section className = 'movie-trailer'>
-                                <Button
-                                    variant="contained"
-                                    startIcon={<YouTubeIcon />}
-                                    color="secondary"
-                                    target="__blank"
-                                    href={`https://www.youtube.com/watch?v=${video}`}
-                                    >
-                                    Watch the Trailer
-                                </Button>
+                                {
+                                    linkAvailablity ?
+                                    <Button
+                                        variant="contained"
+                                        startIcon={<YouTubeIcon />}
+                                        color="secondary"
+                                        target="__blank"
+                                        href={`https://www.youtube.com/watch?v=${video}`}
+                                        >
+                                        Watch the Trailer
+                                    </Button>
+                                    : ''
+                                }
                             </section>
                         </section>
                     </div>
