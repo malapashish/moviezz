@@ -96,12 +96,12 @@ const MovieCards = (props) => {
                 src = {Img}
                 />
                 </a> 
-                <h3 className = {checkWordLength(props)}>{props.title}</h3>
+                <h3 className = {checkWordLength(props)}>{props.title || props.name}</h3>
                 <p className = {`rating`} >
                     Rating:
                     <span className = {`tag ${setVoteClass(props.vote_average)}`} >{props.vote_average}</span> 
                 </p> 
-                <i className = {`heart_icon ${checkifLiked(props.title)}`} onClick = {likeHandler}></i>
+                <i className = {`heart_icon ${checkifLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
             </div> 
             <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
                 <button className = 'button read-more-button'>

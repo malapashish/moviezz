@@ -17,19 +17,20 @@ const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 const Home = () => {
     const [ page, setPage ] = useState(1);
-    const [ movies , setMovies ] = useState([]);
-    const [ searchTerm , setSearchTerm ] = useState('');
-    const [ selectedMovies , setSelectedMovies] = useState([]);
+    const [ contentList , setContentList ] = useState([]);
+    // const [ searchTerm , setSearchTerm ] = useState('');
+    const [ favouriteContent , setFavouriteContent] = useState([]);
     const [ repatedLiked , setRepatedLiked ] = useState(null); 
     const [ message , setMessage ] = useState(null);
 
     // const MoviesAPI = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=8e226ac94d6cb225fcb0652695f029d7&page=${page}`
-    const MoviesAPI = `https://api.themoviedb.org/3/discover/movie?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`
+    // const MoviesAPI = `https://api.themoviedb.org/3/discover/movie?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`
+    const MoviesAPI = `https://api.themoviedb.org/3/trending/all/day?api_key=8e226ac94d6cb225fcb0652695f029d7&page=${page}`;
     const getMovies = (API) => {
         axios
             .get(API)
             .then((response) => { 
-                setMovies(response.data.results); 
+                setContentList(response.data.results); 
             })
     }
 
@@ -43,7 +44,7 @@ const Home = () => {
         db
             .collection('favourites')
             .onSnapshot((q) => {
-               setSelectedMovies(
+               setFavouriteContent(
                    q.docs.map((doc) => ({
                        id : doc.id ,
                        title : doc.data().title , 
@@ -55,22 +56,22 @@ const Home = () => {
     }
  
 
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
-        if(searchTerm){
-        getMovies( SearchAPI + searchTerm )
-        setSearchTerm('');   
-        } 
-    }
+    // const handleOnSubmit = (e) => {
+    //     e.preventDefault();
+    //     if(searchTerm){
+    //     getMovies( SearchAPI + searchTerm )
+    //     setSearchTerm('');   
+    //     } 
+    // }
 
      
 
-    const handleSearchTerm = (e) => {
-        setSearchTerm(e.target.value);
-    }
+    // const handleSearchTerm = (e) => {
+    //     setSearchTerm(e.target.value);
+    // }
   
     const handleFavourite = (input) => {  
-        if(selectedMovies.some(movie => movie.title === input.title)){
+        if(favouriteContent.some(movie => movie.title === input.title)){
             setRepatedLiked(true); 
             setTimeout(() => {
                 setRepatedLiked(null);
@@ -80,7 +81,7 @@ const Home = () => {
             .collection('favourites')
             .add({
                 movieId : input.id,
-                title : input.title,
+                title : input.title || input.name,
                 vote_average : input.vote_average,
                 image_path : IMG_API + input.poster_path
             })
@@ -109,7 +110,7 @@ const Home = () => {
                     Series
                 </NavLink>
             </>
-                <div className = 'search-container'>
+                {/* <div className = 'search-container'>
                     <form onSubmit = {handleOnSubmit}>
                     <input
                     className = 'search'
@@ -119,15 +120,15 @@ const Home = () => {
                     onChange = {handleSearchTerm}
                     />
                     </form>
-                </div>
+                </div> */}
         </nav>
 
         <span className = 'page-heading'> 
-        <i className="fas fa-fire"></i>   
+            <i className="fas fa-fire"></i>   
             Trending
         </span>
         <div className = 'movie-container'>      
-            { movies && movies.map((movie) => <MovieCards key = {movie.id} {...movie} handleFavourite = {handleFavourite} />) }
+            { contentList && contentList.map((content) => <MovieCards key = {content.id} {...content} handleFavourite = {handleFavourite} />) }
         </div>
         <LikeMessages message = {message} />
         {
