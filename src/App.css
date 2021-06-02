@@ -91,6 +91,10 @@ nav input[type="text"]:focus {
     float: none;
   }
 
+  nav input[type="text"] {
+    padding: 0.2rem 0.5rem;
+  }
+
   nav {
     /* text-align: center; */
     flex-direction: column;
