@@ -8,7 +8,6 @@ const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 const  Cards = (props) => { 
  
-    console.log(props);
 
     const [ isliked , setIsLiked ] = useState(false);
     const [selectedMovies , setSelectedMovies] = useState([]);
