@@ -92,6 +92,7 @@ nav input[type="text"]:focus {
   }
 
   nav input[type="text"] {
+    width: 200px;
     padding: 0.2rem 0.5rem;
   }
 
