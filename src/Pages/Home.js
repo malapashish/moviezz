@@ -10,7 +10,7 @@ import '../App.css'
 
 // const MoviesAPI =  `https://api.themoviedb.org/3/trending/all/day?api_key=8e226ac94d6cb225fcb0652695f029d7&page=1   `
 
-const SearchAPI = `https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=`
+// const SearchAPI = `https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=`
 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
