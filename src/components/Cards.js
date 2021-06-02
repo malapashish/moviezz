@@ -6,7 +6,8 @@ import Img from './3308709 1.png'
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 
-const MovieCards = (props) => {
+const  Cards = (props) => { 
+ 
 
     const [ isliked , setIsLiked ] = useState(false);
     const [selectedMovies , setSelectedMovies] = useState([]);
@@ -33,12 +34,22 @@ const MovieCards = (props) => {
     }
 
     const getYoutubeLink = (id) => { 
+        if(props.media_type === 'movie')
+        {
          axios   
             .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
             .then((response) => { 
                 if(response.data.results[0]){
                 setVideo(response.data.results[0].key);}
-            }) 
+            })}
+        else{
+            axios   
+            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
+            .then((response) => { 
+                if(response.data.results[0]){
+                setVideo(response.data.results[0].key);} 
+            })
+        } 
     }
 
     const setVoteClass = (vote) => {
@@ -103,13 +114,22 @@ const MovieCards = (props) => {
                 </p> 
                 <i className = {`heart_icon ${checkifLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
             </div> 
-            <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
-                <button className = 'button read-more-button'>
-                    Read More..
-                </button> 
-            </Link>
+                {
+                    props.media_type === 'movie' ?
+                    <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
+                        <button className = 'button read-more-button'>
+                            Read More..
+                        </button> 
+                    </Link> :
+                    <Link className = 'read-more' to = {'/seriesdetails/' + props.id}>
+                        <button className = 'button read-more-button'>
+                            Read More..
+                        </button> 
+                    </Link> 
+                }
+            
         </div>
     )
 }
 
-export default MovieCards;
+export default Cards;

@@ -72,6 +72,10 @@
 }
 
 @media screen and (max-width: 600px) {
+  .information-section h3 {
+    font-size: 25px;
+  }
+
   .movie-details {
     display: flex;
     flex-direction: column;

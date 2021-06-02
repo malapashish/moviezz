@@ -8,15 +8,16 @@ const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 const MovieDetails = ({ match : { params : {id} } }) => {
  
-    const [ movieDetails , setMovieDetails ] = useState([]);
+    const [ seriesDetails , setSeriesDetails ] = useState([]);
     const [ video , setVideo ] = useState();
 
     useEffect(() => {
        if(id){
             axios 
-                .get(`https://api.themoviedb.org/3/movie/${id}?api_key=8e226ac94d6cb225fcb0652695f029d7`)
+                .get(`https://api.themoviedb.org/3/tv/${id}?api_key=8e226ac94d6cb225fcb0652695f029d7`)
                 .then((response) => { 
-                    setMovieDetails(response.data); 
+                    setSeriesDetails(response.data); 
+                    console.log(response.data);
                 }); 
         }
     },[id])
@@ -35,7 +36,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
 
     const getYoutubeLink = () => { 
         axios   
-            .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
+            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
             .then((response) => { 
                 setVideo(response.data.results[0].key)
             }) 
@@ -59,23 +60,23 @@ const MovieDetails = ({ match : { params : {id} } }) => {
             </nav>
             {getYoutubeLink()}
             <div className = 'movie-details'>
-                <img src={movieDetails.backdrop_path ?  IMG_API+movieDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
+                <img src={seriesDetails.backdrop_path ?  IMG_API+seriesDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>
-                    <img  src = {movieDetails.poster_path ?  IMG_API + movieDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
+                    <img  src = {seriesDetails.poster_path ?  IMG_API + seriesDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
                     <div className = 'information-section'>
-                        <h3>{movieDetails.title}</h3>
+                        <h3>{seriesDetails.title}</h3>
                         <section className = 'summary-section'>
                             <h4 className="summary-title">Summary:</h4>
-                            <p className = 'summary-content'>{movieDetails.overview}</p>
+                            <p className = 'summary-content'>{seriesDetails.overview}</p>
                         </section>
                         <section className = 'movie-stats-section'>
                             <section className = 'movie-release-date'>
                                 <p>Release Date</p>
-                                <p>{movieDetails.release_date}</p>
+                                <p>{seriesDetails.release_date}</p>
                             </section>
                             <section className = 'movie-voting-average'>
                                 <p>Voting Average</p>
-                                <p className = {`tag ${checkrating(movieDetails.vote_average)}`} >{movieDetails.vote_average}</p>
+                                <p className = {`tag ${checkrating(seriesDetails.vote_average)}`} >{seriesDetails.vote_average}</p>
                             </section>
                             <section className = 'movie-trailer'>
                                 <Button

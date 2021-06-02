@@ -2,7 +2,7 @@ import React , { useState , useEffect } from 'react';
 import axios from 'axios'; 
 import { NavLink } from 'react-router-dom' 
 
-import MovieCards from '../components/MovieCards';
+import Cards from '../components/Cards';
 import CustomPagination from '../components/Pagination';
 import LikeMessages from '../components/LikeMessages';
 import db from '../config/firebase'; 
@@ -128,7 +128,7 @@ const Home = () => {
             Trending
         </span>
         <div className = 'movie-container'>      
-            { contentList && contentList.map((content) => <MovieCards key = {content.id} {...content} handleFavourite = {handleFavourite} />) }
+            { contentList && contentList.map((content) => <Cards key = {content.id} {...content} handleFavourite = {handleFavourite} />) }
         </div>
         <LikeMessages message = {message} />
         {
