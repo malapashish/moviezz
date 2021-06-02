@@ -49,14 +49,6 @@ const MovieDetails = ({ match : { params : {id} } }) => {
         }
     }
 
-    const getYoutubeLink = () => { 
-        axios   
-            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
-            .then((response) => { 
-                setVideo(response.data.results[0].key)
-            }) 
-    }
-
     return(
         <>
             <nav>   
