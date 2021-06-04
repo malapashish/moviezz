@@ -1,39 +1,45 @@
-import React , { useState } from 'react';
+import React , { useState , useEffect } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import db from '../config/firebase'; 
 import LikeMessages from '../components/LikeMessages';
 import Cards from '../components/Cards';
+import { useDebounce } from '../utilities/useDebounce';
+import duckSearching from './duck_searching.gif';
+
 
 const Series = () => {
 
-
     const [ searchTerm , setSearchTerm ] = useState(''); 
+    const [ isSearching , setIsSearching ] = useState(false);
     const [ seriesList , setSeriesList ] = useState([]);
     const [ favouriteContent , setFavouriteContent] = useState([]);
     const [ repatedLiked , setRepatedLiked ] = useState(null); 
     const [ message , setMessage ] = useState(null);
 
+    const debouncedSearchTerm = useDebounce( searchTerm , 500 );
+    const SearchAPI = `https://api.themoviedb.org/3/search/tv?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&query=`
+
+    useEffect(() => {
+        if(debouncedSearchTerm){
+            setIsSearching(true);
+            getMovies(SearchAPI + debouncedSearchTerm);
+           fetchSeriesList();
+        }else{
+            setSeriesList([]);
+        }
+    }, [debouncedSearchTerm , SearchAPI])
+
     // https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=
     const IMG_API = 'https://images.tmdb.org/t/p/w1280';
-    const SearchAPI = `https://api.themoviedb.org/3/search/tv?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&query=`
     const getMovies = (API) => {
         axios
             .get(API)
             .then((response) => { 
                 setSeriesList(response.data.results); 
+                setIsSearching(false);
             })
     }
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
-        if(searchTerm){
-        getMovies( SearchAPI + searchTerm )
-        setSearchTerm('');   
-        fetchSeriesList();
-        } 
-    }
-
-     
 
     const handleSearchTerm = (e) => {
         setSearchTerm(e.target.value);
@@ -95,17 +101,22 @@ const Series = () => {
                     Series
                 </NavLink>
             </nav>
-            <div className = 'wrap'>
-                <form onSubmit = {handleOnSubmit}>
+            <div className = 'wrap'> 
                     <input
                     className = 'search'
                     type = 'text'
                     placeholder = 'Enter Series name Here'
                     value = {searchTerm}
                     onChange = {handleSearchTerm}
-                    />
-                    </form>
+                    /> 
             </div>
+                {
+                    isSearching &&
+                     <div style = {{ textAlign : 'center' }} > 
+                        <img src = {duckSearching} alt = 'Searching Gif' className = 'searching-gif' />
+                        Searching.......
+                     </div>
+                }
             <div className = 'movie-container'>
                 { seriesList && seriesList.map((series) => <Cards key = {series.id}  {...series}  media_type = 'tv' handleFavourite = {handleFavourite} />) }
             </div>

@@ -79,13 +79,13 @@ const  Cards = (props) => {
 
     const checkWordLength = (input) => {
         if(input.title){
-            if(input.title.length < 53){
+            if(input.title.length < 30){
                 return 'normal_title';
             }else{
                 return 'small_title';
             }
         }else if(input.name){
-            if(input.name.length < 53){
+            if(input.name.length < 30){
                 return 'normal_title';
             }else{
                 return 'small_title';
