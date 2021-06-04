@@ -72,6 +72,16 @@
 }
 
 @media screen and (max-width: 600px) {
+  .hero-image {
+    display: none;
+  }
+
+  .poster-image {
+    z-index: 0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
   .information-section h3 {
     font-size: 25px;
   }

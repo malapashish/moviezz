@@ -6,8 +6,7 @@ import db from '../config/firebase';
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 
-const FeavouritesCards = (props) => {
-    console.log(props);
+const FeavouritesCards = (props) => { 
     const [ isliked , setIsLiked ] = useState(false);
     const [selectedMovies , setSelectedMovies] = useState([]);
 
