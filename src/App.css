@@ -209,6 +209,14 @@ input[type="text"]:focus {
   width: 250px;
 }
 
+.searching-gif {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: 200px;
+}
+
 .small_title {
   font-size: 15px;
   padding-top: 0px;
