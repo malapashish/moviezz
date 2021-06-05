@@ -1,11 +1,11 @@
 import React , { useState , useEffect } from 'react';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import axios from 'axios'; 
 import db from '../config/firebase'; 
 import LikeMessages from '../components/LikeMessages';
 import Cards from '../components/Cards';
 import { useDebounce } from '../utilities/useDebounce';
 import duckSearching from './duck_searching.gif';
+require('dotenv').config(); 
 
 
 const Series = () => {
@@ -18,7 +18,7 @@ const Series = () => {
     const [ message , setMessage ] = useState(null);
 
     const debouncedSearchTerm = useDebounce( searchTerm , 500 );
-    const SearchAPI = `https://api.themoviedb.org/3/search/tv?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&query=`
+    const SearchAPI = `https://api.themoviedb.org/3/search/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=`
 
     useEffect(() => {
         if(debouncedSearchTerm){
@@ -29,8 +29,7 @@ const Series = () => {
             setSeriesList([]);
         }
     }, [debouncedSearchTerm , SearchAPI])
-
-    // https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=
+    
     const IMG_API = 'https://images.tmdb.org/t/p/w1280';
     const getMovies = (API) => {
         axios
@@ -86,21 +85,7 @@ const Series = () => {
     }
 
     return(
-        <>
-            <nav>   
-                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
-                    Home    
-                </NavLink>
-                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
-                    Feavourites
-                </NavLink> 
-                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
-                    Movies
-                </NavLink>
-                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
-                    Series
-                </NavLink>
-            </nav>
+        <> 
             <div className = 'wrap'> 
                     <input
                     className = 'search'

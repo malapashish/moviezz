@@ -188,7 +188,7 @@ input[type="text"]:focus {
   display: block;
 }
 
-.playbutton_icon {
+.playButton_icon {
   width: 20%;
   position: absolute;
   margin-top: -40px;

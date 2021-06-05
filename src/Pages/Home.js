@@ -1,50 +1,41 @@
 import React , { useState , useEffect } from 'react';
-import axios from 'axios'; 
-import { NavLink } from 'react-router-dom' 
+import axios from 'axios';  
 
 import Cards from '../components/Cards';
 import CustomPagination from '../components/Pagination';
-import LikeMessages from '../components/LikeMessages';
+import LikeMessages from '../components/LikeMessages'; 
 import db from '../config/firebase'; 
-import '../App.css'
+import '../App.css'; 
 
-// const MoviesAPI =  `https://api.themoviedb.org/3/trending/all/day?api_key=8e226ac94d6cb225fcb0652695f029d7&page=1   `
-
-// const SearchAPI = `https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=`
-
+require('dotenv').config(); 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 
 const Home = () => {
     const [ page, setPage ] = useState(1);
-    const [ contentList , setContentList ] = useState([]);
-    // const [ searchTerm , setSearchTerm ] = useState('');
-    const [ favouriteContent , setFavouriteContent] = useState([]);
-    const [ repatedLiked , setRepatedLiked ] = useState(null); 
+    const [ contentList , setContentList ] = useState([]); 
+    const [ favoriteContent , setFavoriteContent] = useState([]);
+    const [ repeatedLiked , setRepeatedLiked ] = useState(null); 
     const [ message , setMessage ] = useState(null);
+ 
 
-    // const MoviesAPI = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=8e226ac94d6cb225fcb0652695f029d7&page=${page}`
-    // const MoviesAPI = `https://api.themoviedb.org/3/discover/movie?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`
-    const MoviesAPI = `https://api.themoviedb.org/3/trending/all/day?api_key=8e226ac94d6cb225fcb0652695f029d7&page=${page}`;
-    const getMovies = (API) => {
-        axios
-            .get(API)
+    //fetches the movie and series list also fetches favoured movie and series list
+    useEffect(() => {
+       axios
+            .get(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)
             .then((response) => { 
                 setContentList(response.data.results); 
-            })
-    }
-
-    useEffect(() => {
-        getMovies(MoviesAPI);
+        })
         fetchMovieList();
-        window.scroll(0, 0);
-    }, [MoviesAPI])
+        window.scroll(0, 0); 
+    }, [page])
     
+    //fetches favoured movie and list
     const fetchMovieList = () => {
         db
-            .collection('favourites')
+            .collection('favorites')
             .onSnapshot((q) => {
-               setFavouriteContent(
+               setFavoriteContent(
                    q.docs.map((doc) => ({
                        id : doc.id ,
                        title : doc.data().title , 
@@ -54,31 +45,20 @@ const Home = () => {
                )
            }) 
     }
- 
 
-    // const handleOnSubmit = (e) => {
-    //     e.preventDefault();
-    //     if(searchTerm){
-    //     getMovies( SearchAPI + searchTerm )
-    //     setSearchTerm('');   
-    //     } 
-    // }
-
-     
-
-    // const handleSearchTerm = (e) => {
-    //     setSearchTerm(e.target.value);
-    // }
-  
-    const handleFavourite = (input) => {  
-        if(favouriteContent.some(movie => movie.title === input.title)){
-            setRepatedLiked(true); 
+    /*onclick handler which check if selected movie or series already added into favoured list or not. 
+    If not added add the movie or list if already added then show a warning saying that the 
+    movie or series already added to the favoured list. 
+    */
+    const handleFavorites = (input) => {  
+        if(favoriteContent.some(movie => movie.title === input.title)){
+            setRepeatedLiked(true); 
             setTimeout(() => {
-                setRepatedLiked(null);
+                setRepeatedLiked(null);
             } , 500);
         }else{
             db
-            .collection('favourites')
+            .collection('favorites')
             .add({
                 movieId : input.id,
                 title : input.title || input.name,
@@ -86,45 +66,27 @@ const Home = () => {
                 image_path : IMG_API + input.poster_path,
                 media_type : input.media_type
             })
-            setMessage('Added to the favourites');
+            setMessage('Added to the favorites');
             setTimeout(() => {
                 setMessage(null);
             } , 500)
         }
-
     }
  
     return(
-        <>
-        <nav>   
-            <>
-                <NavLink exact to = '/' className = 'nav-link ' activeClassName = 'active'>
-                    Home    
-                </NavLink> 
-                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
-                    Feavourites
-                </NavLink> 
-                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
-                    Movies
-                </NavLink>
-                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
-                    Series
-                </NavLink>
-            </> 
-        </nav>
-
+        <> 
         <span className = 'page-heading'> 
             <i className="fas fa-fire"></i>   
             Trending
         </span>
         <div className = 'movie-container'>      
-            { contentList && contentList.map((content) => <Cards key = {content.id} {...content} handleFavourite = {handleFavourite} />) }
+            { contentList && contentList.map((content) => <Cards key = {content.id} {...content} handleFavorites = {handleFavorites} />) }
         </div>
         <LikeMessages message = {message} />
         {
-            repatedLiked && (
+            repeatedLiked && (
                 <div className = 'snackbar show'>
-                    Already added in the favourites..
+                    Already added in the favorites..
                 </div>
             )
         }

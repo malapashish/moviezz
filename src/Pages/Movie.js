@@ -1,21 +1,23 @@
 import React , { useState , useEffect } from 'react';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import axios from 'axios'; 
 import db from '../config/firebase'; 
 import LikeMessages from '../components/LikeMessages';
-import Cards from '../components/Cards';
+import Cards from '../components/Cards'; 
 import { useDebounce } from '../utilities/useDebounce';
 import duckSearching from './duck_searching.gif';
 
+require('dotenv').config(); 
+
+
 const Movie = () => {
 
-    const SearchAPI = `https://api.themoviedb.org/3/search/movie?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US&query=`
+    const SearchAPI = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=`
 
     const [ searchTerm , setSearchTerm ] = useState(''); 
     const [ isSearching , setIsSearching ] = useState(false);
     const [ movies , setMoviesList ] = useState([]);
     const [ favouriteContent , setFavouriteContent] = useState([]);
-    const [ repatedLiked , setRepatedLiked ] = useState(null); 
+    const [ repeatedLiked , setRepeatedLiked ] = useState(null); 
     const [ message , setMessage ] = useState(null);
 
     const debouncedSearchTerm = useDebounce( searchTerm , 500 );
@@ -29,8 +31,7 @@ const Movie = () => {
             setMoviesList([]);
         }
     },[debouncedSearchTerm , SearchAPI])
-
-    // https://api.themoviedb.org/3/search/movie?&api_key=8e226ac94d6cb225fcb0652695f029d7&query=
+ 
     const IMG_API = 'https://images.tmdb.org/t/p/w1280';
     const getMovies = (API) => {
         axios
@@ -49,20 +50,20 @@ const Movie = () => {
 
     const handleFavourite = (input) => {  
         if(favouriteContent.some(movie => movie.title === input.title)){
-            setRepatedLiked(true); 
+            setRepeatedLiked(true); 
             setTimeout(() => {
-                setRepatedLiked(null);
+                setRepeatedLiked(null);
             } , 500);
         }else{
             db
-            .collection('favourites')
+            .collection('favorites')
             .add({
                 movieId : input.id,
                 title : input.title || input.name,
                 vote_average : input.vote_average,
                 image_path : IMG_API + input.poster_path
             })
-            setMessage('Added to the favourites');
+            setMessage('Added to the favorites');
             setTimeout(() => {
                 setMessage(null);
             } , 500)
@@ -73,7 +74,7 @@ const Movie = () => {
 
     const fetchMovieList = () => {
         db
-            .collection('favourites')
+            .collection('favorites')
             .onSnapshot((q) => {
                setFavouriteContent(
                    q.docs.map((doc) => ({
@@ -87,21 +88,7 @@ const Movie = () => {
     }
 
     return(
-        <>
-            <nav>   
-                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
-                    Home    
-                </NavLink>
-                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
-                    Feavourites
-                </NavLink> 
-                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
-                    Movies
-                </NavLink>
-                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
-                    Series
-                </NavLink>
-            </nav>
+        <> 
             <div className = 'wrap'> 
                     <input
                     className = 'search'
@@ -124,9 +111,9 @@ const Movie = () => {
             </div>
             <LikeMessages message = {message} />
             {
-                repatedLiked && (
+                repeatedLiked && (
                     <div className = 'snackbar show'>
-                        Already added in the favourites..
+                        Already added in the favourite..
                     </div>
                 )
             }

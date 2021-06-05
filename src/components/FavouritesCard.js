@@ -2,12 +2,14 @@ import React, { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import db from '../config/firebase';
+import { checkRating } from '../utilities/checkRating';
 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 
-const FeavouritesCards = (props) => { 
-    const [ isliked , setIsLiked ] = useState(false);
+const FavoritesCards = (props) => { 
+    const [ isLiked , setIsLiked ] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [selectedMovies , setSelectedMovies] = useState([]);
 
      
@@ -18,7 +20,7 @@ const FeavouritesCards = (props) => {
 
     const fetchMovieList = () => {
         db
-            .collection('favourites')
+            .collection('favorites')
             .onSnapshot((q) => {
                setSelectedMovies(
                    q.docs.map((doc) => ({
@@ -33,22 +35,9 @@ const FeavouritesCards = (props) => {
            }) 
     }
 
-    const setVoteClass = (vote) => {
-        if(vote >= 8){
-            return 'green'
-        } else if(vote >= 6){
-            return 'orange'
-        } else {
-            return 'red'
-        }
-    }
-
-    
-    
     const deleteHandler = () =>{ 
         setIsLiked(true);
-        props.deleteFavourite(props);
-        console.log(selectedMovies);
+        props.deleteFavourite(props); 
     }
 
     const checkWordLength = (input) => {
@@ -76,9 +65,9 @@ const FeavouritesCards = (props) => {
                 <h3 className = {checkWordLength(props)}>{props.title}</h3>
                 <p className = {`rating`} >
                     Rating:
-                    <span className = {`tag ${setVoteClass(props.vote_average)}`} >{props.vote_average}</span> 
+                    <span className = {`tag ${checkRating(props.vote_average)}`} >{props.vote_average}</span> 
                 </p>
-                <i className = {`delete_icon ${ isliked ? 'pressed' : '' }`} onClick = {deleteHandler}></i>
+                <i className = {`delete_icon ${ isLiked ? 'pressed' : '' }`} onClick = {deleteHandler}></i>
                 {
                     props.media_type === 'movie' ?
                     <Link className = 'read-more' to = {'/moviedetails/' + props.movieId}>
@@ -92,10 +81,9 @@ const FeavouritesCards = (props) => {
                         </button> 
                     </Link>
                 }   
-                
             </div> 
         </div>
     )
 }
 
-export default FeavouritesCards;
+export default FavoritesCards;

@@ -1,18 +1,17 @@
 import React , {useState , useEffect} from 'react';
-
-import { NavLink } from 'react-router-dom'; 
+ 
 import '../App.css';
-import FeavouritesCards from '../components/FavouritesCard'
+import FavoritesCards from '../components/FavouritesCard'
 
 import db from '../config/firebase';
-const Favourites = () => {
+const Favorites = () => {
     
     const [ selectedMovies , setSelectedMovies ] = useState([]);
 
     
     const fetchMovieList = () => {
         db
-            .collection('favourites')
+            .collection('favorites')
             .onSnapshot((q) => {
                setSelectedMovies(
                    q.docs.map((doc) => ({
@@ -29,7 +28,7 @@ const Favourites = () => {
 
     const deleteFavourite = (input) => {
         db
-            .collection('favourites')
+            .collection('favorites')
             .doc(input.id)
             .delete()
             .then(() => {
@@ -45,27 +44,13 @@ const Favourites = () => {
     },[])
 
     return(
-        <>   
-            <nav>   
-                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
-                    Home    
-                </NavLink>
-                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
-                    Feavourites
-                </NavLink> 
-                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
-                    Movies
-                </NavLink>
-                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
-                    Series
-                </NavLink>
-            </nav>
+        <>  
            <div className = 'movie-container'> 
             {
-                selectedMovies && selectedMovies.map((movie) => <FeavouritesCards key = {movie.id} {...movie} deleteFavourite = {deleteFavourite} />)
+                selectedMovies && selectedMovies.map((movie) => <FavoritesCards key = {movie.id} {...movie} deleteFavourite = {deleteFavourite} />)
             }
            </div>
         </>
     )
 }
-export default Favourites
+export default Favorites

@@ -8,13 +8,16 @@ import MovieDetails from './Pages/MovieDetails';
 import SeriesDetails from './Pages/SeriesDetails';
 import Movie from './Pages/Movie';
 import Series from './Pages/Series';
+import NavBar from './components/NavBar';
 
 const App = () => { 
     return(
+        <>
         <BrowserRouter>
+            <NavBar />
             <Switch>
                 <Route exact path = "/" component = {Home} />
-                <Route  path = '/movies'component = {Movie} /> 
+                <Route  path = '/movies' component = {Movie} /> 
                 <Route path = '/series' component = {Series} />
                 <Route path = "/fav" component = {Favourites} />
                 <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
@@ -23,6 +26,7 @@ const App = () => {
                 <Route path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
             </Switch>
         </BrowserRouter>
+        </>
     )
 }
 

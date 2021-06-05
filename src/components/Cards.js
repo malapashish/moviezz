@@ -2,25 +2,29 @@ import React, { useState , useEffect } from 'react';
 import db from '../config/firebase';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Img from './3308709 1.png' 
+import Img from './3308709 1.png';
+import { checkRating } from '../utilities/checkRating'; 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
-
+require('dotenv').config();
 
 const  Cards = (props) => { 
  
 
-    const [ isliked , setIsLiked ] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [ isLiked , setIsLiked ] = useState(false);
     const [selectedMovies , setSelectedMovies] = useState([]);
     const [ video , setVideo ] = useState('');
      
 
     useEffect(() => {
         fetchMovieList(); 
+        getYoutubeLink(props.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const fetchMovieList = () => {
         db
-            .collection('favourites')
+            .collection('favorites')
             .onSnapshot((q) => {
                setSelectedMovies(
                    q.docs.map((doc) => ({
@@ -37,32 +41,23 @@ const  Cards = (props) => {
         if(props.media_type === 'movie')
         {
          axios   
-            .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
+            .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
             .then((response) => { 
                 if(response.data.results[0]){
                 setVideo(response.data.results[0].key);}
             })}
         else{
             axios   
-            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
+            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
             .then((response) => { 
                 if(response.data.results[0]){
                 setVideo(response.data.results[0].key);} 
             })
         } 
     }
+ 
 
-    const setVoteClass = (vote) => {
-        if(vote >= 8){
-            return 'green'
-        } else if(vote >= 6){
-            return 'orange'
-        } else {
-            return 'red'
-        }
-    }
-
-    const checkifLiked = (title) =>{
+    const checkIfLiked = (title) =>{
         if(selectedMovies.some((movie) => movie.title === title)){
             return 'pressed';
         }else{
@@ -73,8 +68,7 @@ const  Cards = (props) => {
     
     const likeHandler = () =>{ 
         setIsLiked(true);
-        props.handleFavourite(props);
-        console.log(isliked);
+        props.handleFavorites(props); 
     }
 
     const checkWordLength = (input) => {
@@ -95,24 +89,24 @@ const  Cards = (props) => {
 
     return(
         <div className = 'movie'>
-            {getYoutubeLink(props.id)}
+            {}
             <img  src = {props.poster_path ? IMG_API + props.poster_path : 
                 'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
                 alt = {props.title + ' poster image'} className = 'movie-img' />
             <div className = 'movie_info'>
                 <a href = {`https://www.youtube.com/watch?v=${video}`} target = "_blank" rel="noreferrer" >
                 <img
-                alt = 'playbutton_icon'
-                className = 'playbutton_icon'   
+                alt = 'playButton_icon'
+                className = 'playButton_icon'   
                 src = {Img}
                 />
                 </a> 
                 <h3 className = {checkWordLength(props)}>{props.title || props.name}</h3>
                 <p className = {`rating`} >
                     Rating:
-                    <span className = {`tag ${setVoteClass(props.vote_average)}`} >{props.vote_average}</span> 
+                    <span className = {`tag ${checkRating(props.vote_average)}`} >{props.vote_average}</span> 
                 </p> 
-                <i className = {`heart_icon ${checkifLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
+                <i className = {`heart_icon ${checkIfLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
             </div> 
                 {
                     props.media_type === 'tv' ?

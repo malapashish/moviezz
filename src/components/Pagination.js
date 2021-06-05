@@ -8,8 +8,7 @@ const darkTheme = createMuiTheme({
   },
 });
 
-const Paginatio = ({ setPage, numOfPages = 50 }) => {
-  // Scroll to top when page changes
+const Paginatio = ({ setPage, numOfPages = 50 }) => { 
   const handlePageChange = (page) => {
     setPage(page);
     window.scroll(0, 0);

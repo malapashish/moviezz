@@ -1,63 +1,49 @@
 import React , {useEffect, useState} from 'react';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom'; 
-import './DetailsPage.css';
+import axios from 'axios'; 
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube"; 
-const IMG_API = 'https://images.tmdb.org/t/p/w1280'; 
 
+import './DetailsPage.css'; 
+import { checkRating } from '../utilities/checkRating';
+
+require('dotenv').config();
+
+const IMG_API = 'https://images.tmdb.org/t/p/w1280'; 
 const MovieDetails = ({ match : { params : {id} } }) => {
  
     const [ movieDetails , setMovieDetails ] = useState([]);
     const [ video , setVideo ] = useState();
-
+    const [ linkAvailability , setLinkAvailability ] = useState(false);
+    //fetches the details of the movie
     useEffect(() => {
        if(id){
-            axios 
-                .get(`https://api.themoviedb.org/3/movie/${id}?api_key=8e226ac94d6cb225fcb0652695f029d7`)
+            axios  
+                .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`)
                 .then((response) => { 
                     setMovieDetails(response.data); 
                 }); 
+            getYoutubeLink()
         }
-    },[id])
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
  
 
-    const checkrating = (rating) => {
-        if(rating >= 8){
-            return 'green'
-        } else if(rating >= 6){
-            return 'orange'
-        } else {
-            return 'red'
-        }
-    }
-
+    //fetches the youtube link of the trailer of that move 
     const getYoutubeLink = () => { 
         axios   
-            .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
+            .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
             .then((response) => { 
-                setVideo(response.data.results[0].key)
+                if(response.data.results.length !== 0){
+                    setVideo(response.data.results[0].key)
+                    setLinkAvailability(true);
+                }else{
+                    setLinkAvailability(false);
+                }
             }) 
     }
 
     return(
-        <>
-            <nav>   
-                <NavLink exact to = '/' className = 'nav-link' activeClassName = 'active'>
-                    Home    
-                </NavLink>
-                <NavLink to = '/fav' className = 'nav-link' activeClassName = 'active'>
-                    Feavourites
-                </NavLink> 
-                <NavLink to = '/movies' className = 'nav-link' activeClassName = 'active'>
-                    Movies
-                </NavLink>
-                <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
-                    Series
-                </NavLink>
-            </nav>
-            {getYoutubeLink()}
+        <> 
             <div className = 'movie-details'>
                 <img src={movieDetails.backdrop_path ?  IMG_API+movieDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>
@@ -75,9 +61,11 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                             </section>
                             <section className = 'movie-voting-average'>
                                 <p>Voting Average</p>
-                                <p className = {`tag ${checkrating(movieDetails.vote_average)}`} >{movieDetails.vote_average}</p>
+                                <p className = {`tag ${checkRating(movieDetails.vote_average)}`} >{movieDetails.vote_average}</p>
                             </section>
                             <section className = 'movie-trailer'>
+                            {   
+                                linkAvailability ?
                                 <Button
                                     variant="contained"
                                     startIcon={<YouTubeIcon />}
@@ -86,7 +74,9 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                     href={`https://www.youtube.com/watch?v=${video}`}
                                     >
                                     Watch the Trailer
-                                </Button>
+                                </Button>:
+                                ''
+                            }
                             </section>
                         </section>
                     </div>
