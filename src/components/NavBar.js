@@ -1,9 +1,18 @@
-import React from 'react';
+import React , { useState } from 'react';
 import { NavLink } from 'react-router-dom' 
+import { IconContext } from "react-icons";
+import { FaAlignJustify } from "react-icons/fa";
 
 const NavBar = () => {
+    
+    const [ isClicked , setIsClicked ] = useState(false);
+
+    const hamburgerClickHandler = () => {
+        setIsClicked(!isClicked);
+    }
+    
     return(
-        <nav>    
+        <nav className = {`${isClicked ?  `responsive` : `` }`}>    
             <NavLink exact to = '/' className = 'nav-link ' activeClassName = 'active'>
                 Home    
             </NavLink> 
@@ -15,7 +24,14 @@ const NavBar = () => {
             </NavLink>
             <NavLink to = '/series' className = 'nav-link' activeClassName = 'active'>
                 Series
-            </NavLink> 
+            </NavLink>
+             <IconContext.Provider
+                value = {{ size : '30px' }}
+             >  
+                <div className = 'hamburger-icon' onClick = {hamburgerClickHandler}>
+                    <FaAlignJustify/>
+                </div>
+             </IconContext.Provider>
         </nav>
     )
 }

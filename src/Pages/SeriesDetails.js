@@ -1,13 +1,12 @@
-import React , {useEffect, useState} from 'react';
-import axios from 'axios'; 
+import React , {useEffect, useState} from 'react'; 
 import './DetailsPage.css';
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube"; 
+
 import { checkRating } from '../utilities/checkRating';
+import { movieDbAPI , imgAPI } from '../apis';
 
-
-require('dotenv').config()
-const IMG_API = 'https://images.tmdb.org/t/p/w1280'; 
+require('dotenv').config() 
 
 const MovieDetails = ({ match : { params : {id} } }) => {
  
@@ -16,24 +15,29 @@ const MovieDetails = ({ match : { params : {id} } }) => {
     const [ linkAvailability , setLinkAvailability ] = useState();
 
     useEffect(() => {
-       if(id){
-            axios 
-                .get(`https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`)
-                .then((response) => { 
-                    setSeriesDetails(response.data);  
-                }); 
+       if(id){ 
+            const getDetails = async () => {
+                await movieDbAPI
+                                .get(`/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`)
+                                .then((response) => { 
+                                        setSeriesDetails(response.data); 
+                                    });
+            }
+            getDetails();
 
-            axios   
-            .get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=8e226ac94d6cb225fcb0652695f029d7&language=en-US`)
-            .then((response) => {
-                if(response.data.results.length !== 0){
-                    setVideo(response.data.results[0].key)
-                    setLinkAvailability(true);
-                }else{
-                    setLinkAvailability(false);
-                }
-            }) 
-            
+            const getYoutubeLink = async () => {
+                await movieDbAPI
+                                .get(`/tv/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+                                .then((response) => { 
+                                    if(response.data.results.length !== 0){
+                                        setVideo(response.data.results[0].key)
+                                        setLinkAvailability(true);
+                                    }else{
+                                        setLinkAvailability(false);
+                                    }
+                                }) 
+            }
+            getYoutubeLink()
         }
     },[id])
 
@@ -53,9 +57,9 @@ const MovieDetails = ({ match : { params : {id} } }) => {
         <>
             {/* { id && getYoutubeLink()} */}
             <div className = 'movie-details'>
-                <img src={seriesDetails.backdrop_path ?  IMG_API+seriesDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
+                <img src={seriesDetails.backdrop_path ?  imgAPI+seriesDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>
-                    <img  src = {seriesDetails.poster_path ?  IMG_API + seriesDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
+                    <img  src = {seriesDetails.poster_path ?  imgAPI + seriesDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
                     <div className = 'information-section'>
                         <h3>{seriesDetails.title}</h3>
                         <section className = 'summary-section'>

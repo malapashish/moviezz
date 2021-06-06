@@ -29,6 +29,8 @@ nav {
   flex-direction: row;
   justify-content: space-evenly;
   overflow: hidden;
+  transition: all 0.2s;
+  user-select: none;
 }
 
 .nav-link {
@@ -38,6 +40,11 @@ nav {
   padding: 0.4rem 1.5rem;
   position: relative;
   transition: 0.2 all;
+}
+
+nav .hamburger-icon {
+  margin-top: 10px;
+  display: none;
 }
 
 .active {
@@ -113,9 +120,33 @@ input[type="text"]:focus {
     padding: 0.2rem 0.5rem;
   }
 
-  nav {
-    /* text-align: center; */
+  nav .nav-link:not(:first-child) {
+    display: none;
+  }
+
+  /* nav {
+    text-align: center;
     flex-direction: column;
+  } */
+
+  nav .hamburger-icon {
+    display: block;
+    margin: 20px;
+  }
+
+  nav.responsive {
+    flex-direction: column;
+    display: block;
+  }
+
+  nav.responsive .nav-link {
+    display: block;
+  }
+
+  nav.responsive .hamburger-icon {
+    margin: 0;
+    margin-top: 10px;
+    color: #4caf50;
   }
 
   nav .nav-link {
