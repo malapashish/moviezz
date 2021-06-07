@@ -52,7 +52,8 @@ const Home = () => {
     movie or series already added to the favoured list. 
     */
     const handleFavorites = (input) => {  
-        if(favoriteContent.some(movie => movie.title === input.title)){
+        if(favoriteContent.some(content =>  content.title === (input.title || input.name))){
+            console.log(favoriteContent);
             setRepeatedLiked(true); 
             setTimeout(() => {
                 setRepeatedLiked(null);
@@ -70,7 +71,7 @@ const Home = () => {
             setMessage('Added to the favorites');
             setTimeout(() => {
                 setMessage(null);
-            } , 500)
+            } , 500) 
         }
     }
  
