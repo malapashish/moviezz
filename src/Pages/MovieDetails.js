@@ -1,6 +1,7 @@
 import React , {useEffect, useState} from 'react'; 
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube"; 
+import { Redirect } from 'react-router-dom';
 
 import './DetailsPage.css'; 
 import { checkRating } from '../utilities/checkRating';
@@ -38,7 +39,13 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                 }) 
             }
             getYoutubeLink()
-        } 
+        } else{
+            <Redirect 
+            to = {{
+                pathname : '/'
+            }}
+            />
+        }
     },[id])
  
 
