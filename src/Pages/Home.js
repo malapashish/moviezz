@@ -1,15 +1,13 @@
-import React , { useState , useEffect } from 'react';
-import axios from 'axios';  
+import React , { useState , useEffect } from 'react'; 
 
 import Cards from '../components/Cards';
 import CustomPagination from '../components/Pagination';
 import LikeMessages from '../components/LikeMessages'; 
-import db from '../config/firebase'; 
+import db from '../config/firebase';
+import { movieDbAPI , imgAPI } from '../apis'; 
 import '../App.css'; 
 
-require('dotenv').config(); 
-const IMG_API = 'https://images.tmdb.org/t/p/w1280';
-
+require('dotenv').config();  
 
 const Home = () => {
     const [ page, setPage ] = useState(1);
@@ -21,17 +19,20 @@ const Home = () => {
 
     //fetches the movie and series list also fetches favoured movie and series list
     useEffect(() => {
-       axios
-            .get(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)
-            .then((response) => { 
-                setContentList(response.data.results); 
-        })
-        fetchMovieList();
+        const getTrendingList = async () => {
+        await movieDbAPI
+                        .get(`/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)
+                        .then((response) => {
+                            setContentList(response.data.results);
+                        })
+        }
+        getTrendingList();
+        fetchFavourites();
         window.scroll(0, 0); 
     }, [page])
     
     //fetches favoured movie and list
-    const fetchMovieList = () => {
+    const fetchFavourites = () => {
         db
             .collection('favorites')
             .onSnapshot((q) => {
@@ -63,7 +64,7 @@ const Home = () => {
                 movieId : input.id,
                 title : input.title || input.name,
                 vote_average : input.vote_average,
-                image_path : IMG_API + input.poster_path,
+                image_path : imgAPI + input.poster_path,
                 media_type : input.media_type
             })
             setMessage('Added to the favorites');

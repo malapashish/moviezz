@@ -1,8 +1,8 @@
 import React , { useState , useEffect } from 'react';
-import axios from 'axios'; 
 import db from '../config/firebase'; 
 import LikeMessages from '../components/LikeMessages';
 import Cards from '../components/Cards';
+import { movieDbAPI } from '../apis';
 import { useDebounce } from '../utilities/useDebounce';
 import duckSearching from './duck_searching.gif';
 require('dotenv').config(); 
@@ -18,27 +18,28 @@ const Series = () => {
     const [ message , setMessage ] = useState(null);
 
     const debouncedSearchTerm = useDebounce( searchTerm , 500 );
-    const SearchAPI = `https://api.themoviedb.org/3/search/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=`
 
     useEffect(() => {
         if(debouncedSearchTerm){
+            const getSeries = async (term) => {
+                await movieDbAPI
+                                .get(`search/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${term}`)
+                                .then((response) => { 
+                                    setSeriesList(response.data.results); 
+                                    setIsSearching(false);
+                                })                
+            }
+            getSeries(debouncedSearchTerm);
             setIsSearching(true);
-            getMovies(SearchAPI + debouncedSearchTerm);
-           fetchSeriesList();
+            fetchSeriesList();
         }else{
             setSeriesList([]);
         }
-    }, [debouncedSearchTerm , SearchAPI])
+    }, [debouncedSearchTerm])
     
     const IMG_API = 'https://images.tmdb.org/t/p/w1280';
-    const getMovies = (API) => {
-        axios
-            .get(API)
-            .then((response) => { 
-                setSeriesList(response.data.results); 
-                setIsSearching(false);
-            })
-    }
+
+    
 
     const handleSearchTerm = (e) => {
         setSearchTerm(e.target.value);

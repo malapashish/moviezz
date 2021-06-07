@@ -19,9 +19,11 @@ const App = () => {
                 <Route exact path = "/" component = {Home} />
                 <Route  path = '/movies' component = {Movie} /> 
                 <Route path = '/series' component = {Series} />
-                <Route path = "/fav" component = {Favourites} />
+                <Route path = '/series/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
+                <Route  path = '/movies/moviedetails/:id'  render = { props => <MovieDetails {...props} /> } /> 
                 <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
                 <Route path = '/seriesdetails/:id' render = { props => <SeriesDetails {...props}  /> } />
+                <Route path = "/fav" component = {Favourites} />
                 <Route path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
                 <Route path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
             </Switch>
