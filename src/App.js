@@ -1,5 +1,5 @@
 import React  from 'react';  
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter as Router , Route, Switch } from "react-router-dom";
 
 import './App.css';
 import Home from './Pages/Home';
@@ -13,7 +13,7 @@ import NavBar from './components/NavBar';
 const App = () => { 
     return(
         <>
-        <BrowserRouter>
+        <Router>
             <NavBar />
             <Switch>
                 <Route exact path = "/" component = {Home} />
@@ -27,7 +27,7 @@ const App = () => {
                 <Route path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
                 <Route path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
             </Switch>
-        </BrowserRouter>
+        </Router>
         </>
     )
 }
