@@ -1,7 +1,6 @@
 import React , {useEffect, useState} from 'react'; 
 import { Button } from "@material-ui/core";
-import YouTubeIcon from "@material-ui/icons/YouTube"; 
-import { Redirect } from 'react-router-dom';
+import YouTubeIcon from "@material-ui/icons/YouTube";  
 
 import './DetailsPage.css'; 
 import { checkRating } from '../utilities/checkRating';
@@ -40,6 +39,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
             }
             getYoutubeLink()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
  
 
