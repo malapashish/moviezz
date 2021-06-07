@@ -39,14 +39,8 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                 }) 
             }
             getYoutubeLink()
-        } else{
-            <Redirect 
-            to = {{
-                pathname : '/'
-            }}
-            />
         }
-    },[id])
+    },[])
  
 
     //fetches the youtube link of the trailer of that move 
