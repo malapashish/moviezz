@@ -27,7 +27,7 @@ Favourites Page
 
 Detailed Movies Page
 
-![Detailed_Movies_Page](images/Single.PNG)
+![Detailed_Movies_Page](images/single.PNG)
 
 Only Movies
 ![Only_Movies_Page](images/Only_Movie.PNG)
