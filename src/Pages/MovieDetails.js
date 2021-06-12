@@ -81,6 +81,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                             }
                             </section>
                         </section>
+                        <span>Cast Details:</span>
                         <div className = 'carouselSection'>
                             <Carousel 
                             id = {id}
