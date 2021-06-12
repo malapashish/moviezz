@@ -1,5 +1,4 @@
-import React , {useEffect, useState} from 'react'; 
-import './DetailsPage.css';
+import React , {useEffect, useState} from 'react';  
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube"; 
 
@@ -81,16 +80,15 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
                                     : ''
                                 }
                             </section>
-                        </section>
-                        <span>Cast Details:</span>
+                        </section> 
+                    </div>
+                </div>
                         <div className = 'carouselSection'> 
                             <Carousel 
                             id = {id}
                             media_type = 'tv'
                             />
                         </div>
-                    </div>
-                </div>
             </div>
         </> 
     )

@@ -76,8 +76,7 @@ const Home = () => {
     }
  
     return(
-        <> 
-        {console.log(contentList)}
+        <>  
         <span className = 'page-heading'> 
             <i className="fas fa-fire"></i>   
             Trending

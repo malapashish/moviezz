@@ -4,7 +4,7 @@ import LikeMessages from '../components/LikeMessages';
 import Cards from '../components/Cards';
 import { movieDbAPI } from '../apis';
 import { useDebounce } from '../utilities/useDebounce';
-import duckSearching from './duck_searching.gif';
+import duckSearching from '../images/duck_searching.gif'
 require('dotenv').config(); 
 
 

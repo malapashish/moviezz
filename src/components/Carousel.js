@@ -54,20 +54,24 @@ const Carousel = ({ id , media_type }) => {
 
     return(
         <>    
+            <h3>Cast Details:</h3>
             {
                 carouselList.length < 2 ?  
                 <div className = 'alert'>
                     <span>Cast Details are not available</span> 
                 </div>:
-                <AliceCarousel 
-                mouseTracking
-                infinite
-                disableDotsControls
-                disableButtonsControls
-                responsive = {responsive}
-                items = {carouselList}
-                autoPlay
-                />
+                <>
+                    <span>Main Cast</span>
+                    <AliceCarousel 
+                    mouseTracking
+                    infinite
+                    disableDotsControls
+                    disableButtonsControls
+                    responsive = {responsive}
+                    items = {carouselList}
+                    autoPlay
+                    />
+                </>
             } 
         </>
     );

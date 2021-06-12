@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react';
 import db from '../config/firebase';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Img from './3308709 1.png';
+import button_icon from '../images/button_icon.png';
 import { checkRating } from '../utilities/checkRating'; 
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 require('dotenv').config();
@@ -88,16 +88,16 @@ const  Cards = (props) => {
     }
 
     return(
-        <div className = 'movie'> 
+        <div className = 'card_container'> 
             <img  src = {props.poster_path ? IMG_API + props.poster_path : 
                 'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
-                alt = {props.title + ' poster image'} className = 'movie-img' />
+                alt = {props.title + ' poster image'} className = 'card_poster' />
             <div className = 'movie_info'>
                 <a href = {`https://www.youtube.com/watch?v=${video}`} target = "_blank" rel="noreferrer" >
                 <img
                 alt = 'playButton_icon'
                 className = 'playButton_icon'   
-                src = {Img}
+                src = {button_icon}
                 />
                 </a> 
                 <h3 className = {checkWordLength(props)}>{props.title || props.name}</h3>
