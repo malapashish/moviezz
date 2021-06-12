@@ -5,6 +5,7 @@ import YouTubeIcon from "@material-ui/icons/YouTube";
 import './DetailsPage.css'; 
 import { checkRating } from '../utilities/checkRating';
 import { movieDbAPI , imgAPI } from '../apis';
+import Carousel from '../components/Carousel';
 
 require('dotenv').config();
  
@@ -42,21 +43,6 @@ const MovieDetails = ({ match : { params : {id} } }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
  
-
-    //fetches the youtube link of the trailer of that move 
-    // const getYoutubeLink = () => { 
-    //     axios   
-    //         .get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-    //         .then((response) => { 
-    //             if(response.data.results.length !== 0){
-    //                 setVideo(response.data.results[0].key)
-    //                 setLinkAvailability(true);
-    //             }else{
-    //                 setLinkAvailability(false);
-    //             }
-    //         }) 
-    // }
-
     return(
         <> 
             <div className = 'movie-details'>
@@ -94,6 +80,12 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                             }
                             </section>
                         </section>
+                        <div className = 'carouselSection'>
+                            <Carousel 
+                            id = {id}
+                            media_type = 'movie'
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

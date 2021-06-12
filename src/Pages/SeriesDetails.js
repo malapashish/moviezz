@@ -5,10 +5,11 @@ import YouTubeIcon from "@material-ui/icons/YouTube";
 
 import { checkRating } from '../utilities/checkRating';
 import { movieDbAPI , imgAPI } from '../apis';
+import Carousel from '../components/Carousel';
 
 require('dotenv').config() 
 
-const MovieDetails = ({ match : { params : {id} } }) => {
+const SeriesDetails = ({ match : { params : {id} } }) => {
  
     const [ seriesDetails , setSeriesDetails ] = useState([]);
     const [ video , setVideo ] = useState();
@@ -41,17 +42,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
         }
     },[id])
 
- 
 
-    // const checkRating = (rating) => {
-    //     if(rating >= 8){
-    //         return 'green'
-    //     } else if(rating >= 6){
-    //         return 'orange'
-    //     } else {
-    //         return 'red'
-    //     }
-    // }
 
     return(
         <>
@@ -91,6 +82,12 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                 }
                             </section>
                         </section>
+                        <div className = 'carouselSection'>
+                            <Carousel 
+                            id = {id}
+                            media_type = 'tv'
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,4 +96,4 @@ const MovieDetails = ({ match : { params : {id} } }) => {
 
 }
 
-export default MovieDetails;
+export default SeriesDetails;

@@ -119,8 +119,7 @@ const  Cards = (props) => {
                             Read More..
                         </button> 
                     </Link>  
-                }
-            
+                }            
         </div>
     )
 }

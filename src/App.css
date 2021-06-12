@@ -415,3 +415,22 @@ input[type="text"]:focus {
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
+
+.carouselDiv {
+  display: flex;
+  flex-direction: column;
+  object-fit: contain;
+  /* padding: 10px; */
+  padding: 5px;
+}
+
+.carouselImg {
+  border-radius: 10px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 5px black;
+  /* width: 100%; */
+}
+
+.carouselSection {
+  width: 65vw;
+}
