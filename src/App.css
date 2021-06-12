@@ -419,7 +419,7 @@ input[type="text"]:focus {
 .carouselDiv {
   display: flex;
   flex-direction: column;
-  object-fit: contain;
+  /* object-fit: contain; */
   /* padding: 10px; */
   padding: 5px;
 }
@@ -428,9 +428,18 @@ input[type="text"]:focus {
   border-radius: 10px;
   margin-bottom: 5px;
   box-shadow: 0px 0px 5px black;
-  /* width: 100%; */
 }
 
 .carouselSection {
   width: 65vw;
+}
+
+.alert {
+  width: 80%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  color: #000;
+  background-color: #ffd48a;
+  border-left: 5px solid #ea9400;
 }

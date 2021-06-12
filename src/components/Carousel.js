@@ -23,7 +23,8 @@ const Carousel = ({ id , media_type }) => {
     );
     setCarousel(data.cast);
     };
-    
+   
+
     const responsive = {
         0: {
         items: 3,
@@ -38,6 +39,7 @@ const Carousel = ({ id , media_type }) => {
 
     const carouselList = carousel.map((c) => (
         <div className = 'carouselDiv'>
+            
             <img 
             src = { c.profile_path ?  `https://image.tmdb.org/t/p/w300/${c.profile_path}` : 'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80'}
             alt = {c.name}
@@ -48,18 +50,25 @@ const Carousel = ({ id , media_type }) => {
         </div>
     ))
 
+    console.log(carouselList.length);
+
     return(
-        <>
-            {console.log('Enter')}
-            <AliceCarousel 
-            mouseTracking
-            infinite
-            disableDotsControls
-            disableButtonsControls
-            responsive = {responsive}
-            items = {carouselList}
-            autoPlay
-            />
+        <>    
+            {
+                carouselList.length < 2 ?  
+                <div className = 'alert'>
+                    <span>Cast Details are not available</span> 
+                </div>:
+                <AliceCarousel 
+                mouseTracking
+                infinite
+                disableDotsControls
+                disableButtonsControls
+                responsive = {responsive}
+                items = {carouselList}
+                autoPlay
+                />
+            } 
         </>
     );
 };

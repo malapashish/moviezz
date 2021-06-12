@@ -45,6 +45,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
  
     return(
         <> 
+            {console.log(movieDetails)}
             <div className = 'movie-details'>
                 <img src={movieDetails.backdrop_path ?  imgAPI+movieDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>

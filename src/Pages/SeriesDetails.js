@@ -46,13 +46,13 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
 
     return(
         <>
-            {/* { id && getYoutubeLink()} */}
+            {console.log(seriesDetails)}
             <div className = 'movie-details'>
                 <img src={seriesDetails.backdrop_path ?  imgAPI+seriesDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>
                     <img  src = {seriesDetails.poster_path ?  imgAPI + seriesDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
                     <div className = 'information-section'>
-                        <h3>{seriesDetails.title}</h3>
+                        <h3>{seriesDetails.title || seriesDetails.name}</h3>
                         <section className = 'summary-section'>
                             <h4 className="summary-title">Summary:</h4>
                             <p className = 'summary-content'>{seriesDetails.overview}</p>
@@ -82,7 +82,8 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
                                 }
                             </section>
                         </section>
-                        <div className = 'carouselSection'>
+                        <span>Cast Details:</span>
+                        <div className = 'carouselSection'> 
                             <Carousel 
                             id = {id}
                             media_type = 'tv'
