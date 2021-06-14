@@ -1,5 +1,5 @@
 import React , {useEffect, useState} from 'react'; 
-import { Link } from 'react-router-dom';
+import { Link , useLocation } from 'react-router-dom';
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";  
 
@@ -16,6 +16,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
     const [ video , setVideo ] = useState();
     const [ linkAvailability , setLinkAvailability ] = useState(false);
     const [ recommendations , setRecommendations ] = useState([]);
+    const [ credits , setCredits ] = useState([]);
     //fetches the details of the movie
     useEffect(() => {
        if(id){ 
@@ -51,12 +52,24 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                 })
                             }
                             getRecommendations();
-                        }
+            
+            const getCredits = async () => {
+                await movieDbAPI
+                                .get(`/movie/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+                                .then((response) => {
+                                    setCredits(response.data.cast)
+                                })
+            }
+            
+            getCredits();
+
+            }
                         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
  
     return(
         <>  
+            {console.log(credits)}
             <div className = 'movie-details'>
                 <img src={movieDetails.backdrop_path ?  imgAPI+movieDetails.backdrop_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Backdrop_Images' className = "hero-image" /> 
                 <div className = 'details-section'>
@@ -94,30 +107,31 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                         </section>
                     </div>
                 </div>
-                        <div className = 'carouselSection'>
-                            <Carousel 
-                            id = {id}
-                            media_type = 'movie'
-                            />
-                            <div className = 'complete-crew-section'>
-                                <Link to = '/cast' className = 'cast-list-link' >
-                                    Full Crew and Cast Members
-                                </Link>
-                            </div>
+                    <div className = 'carouselSection'>
+                        <h3>Cast Details:</h3>
+                        <span>Main Cast</span>
+                        <Carousel 
+                        list = {credits}
+                        />
+                        <div className = 'complete-crew-section'>
+                            <Link to = {'/moviedetails/' + id + '/cast'} className = 'cast-list-link'  >
+                                Full Crew and Cast Members
+                            </Link>
                         </div>
-                <div>
-                    Recommendation 
-                    <div className = 'row'>
-                            {
-                                recommendations.map((movie) => (
-                                    <img
-                                    src = {IMG_API + movie.poster_path}
-                                    alt = {`${movie.title} poster`}
-                                    className = 'recommendation-poster-image'
-                                    />
-                                ))
-                            }
                     </div>
+                <div className = 'recommendation'>
+                    <h3>Recommendation:</h3>
+                    <div className = 'recommendation-card-section'>
+                        { recommendations && recommendations.map((movie) => (
+                        <div className = 'recommendation-card-container'>
+                            <img 
+                            src = {IMG_API + movie.poster_path}
+                            alt = {movie.name}
+                            className = 'recommendation_profile'
+                            /> 
+                        </div>        
+                        )) }
+                    </div>  
                 </div>
             </div>
         </> 

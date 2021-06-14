@@ -19,6 +19,25 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
 /***************************body styling end***********************/
 
 /***************************Navigation Bar styling start**********************/
@@ -379,6 +398,12 @@ input[type="text"]:focus {
   display: inline;
 }
 
+.cast-list-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 20px;
+}
+
 .alert {
   width: 80%;
   padding: 10px;
@@ -387,6 +412,28 @@ input[type="text"]:focus {
   color: #000;
   background-color: #ffd48a;
   border-left: 5px solid #ea9400;
+}
+
+.recommendation {
+  margin-left: 50px;
+  margin-top: 10px;
+  width: 65vw;
+}
+
+.recommendation-card-container {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  width: 130px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+}
+
+.recommendation_profile {
+  width: 130px;
+  height: 200px;
 }
 /****************************Details page styling end******************************/
 
@@ -408,14 +455,122 @@ input[type="text"]:focus {
   margin-top: 25px;
   width: 65vw;
 }
+
+.carousel-name {
+  font-size: 15px;
+}
 /****************************Carousal styling end******************************/
+
+/*****************************Crew List Page styling start******************************/
+.crew-details-section-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.cast-section-container {
+  text-align: center;
+  /* width: 50%; */
+}
+
+.members-count {
+  font-weight: 800;
+  padding-top: 10px;
+  color: gray;
+}
+
+.cast-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.cast-card-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  width: 130px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+}
+
+.cast_profile {
+  width: 130px;
+  height: 200px;
+}
+
+.cast-member-name {
+  position: absolute;
+  top: 75%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.crew-section-container {
+  width: 800px;
+  padding: 20px;
+}
+
+.crew-cast-section {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.crew-card-container {
+  display: flex;
+  flex-direction: column;
+  /* margin: 20px; */
+  margin-left: 0px;
+  margin-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 130px;
+  height: 200px;
+  position: relative;
+  border-radius: 10px;
+}
+
+.crew_profile {
+  width: 130px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.crew-member-name {
+  position: absolute;
+  text-align: center;
+  top: 70%;
+  width: 100%;
+  height: 30%;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0px 0px 10px 10px;
+}
+
+/* .cast-card-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  width: 130px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+} */
+
+/*****************************Crew List Page styling end******************************/
+
 /****************************Search Movies and Series section styling start**************/
 .searching-gif {
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  width: 200px;
+  width: 500px;
 }
 /****************************Search Movies and Series section styling end****************/
 
@@ -520,6 +675,19 @@ input[type="text"]:focus {
   }
 
   .carouselSection {
+    width: 70vw;
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+
+  .crew-section-container {
+    width: 100%;
+  }
+
+  .crew-details-section-container {
+    flex-direction: column;
+  }
+  .recommendation {
     width: 70vw;
     margin-left: 0px;
     margin-top: 10px;

@@ -13,6 +13,7 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
     const [ seriesDetails , setSeriesDetails ] = useState([]);
     const [ video , setVideo ] = useState();
     const [ linkAvailability , setLinkAvailability ] = useState();
+    const [ credits , setCredits ] = useState([]);
 
     useEffect(() => {
        if(id){ 
@@ -38,6 +39,16 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
                                 }) 
             }
             getYoutubeLink()
+
+
+            const getCredits = async () => {
+                await movieDbAPI
+                                .get(`/tv/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+                                .then((response) => {
+                                    setCredits(response.data.cast)
+                                })
+            }
+            getCredits();
         }
     },[id])
 
@@ -85,8 +96,7 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
                 </div>
                         <div className = 'carouselSection'> 
                             <Carousel 
-                            id = {id}
-                            media_type = 'tv'
+                            list = {credits}
                             />
                         </div>
             </div>

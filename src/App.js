@@ -18,16 +18,16 @@ const App = () => {
             <NavBar />
             <Switch>
                 <Route exact path = "/" component = {Home} />
-                <Route  path = '/movies' component = {Movie} /> 
-                <Route path = '/series' component = {Series} />
-                <Route path = '/series/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
-                <Route  path = '/movies/moviedetails/:id'  render = { props => <MovieDetails {...props} /> } /> 
-                <Route path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
-                <Route path = '/seriesdetails/:id' render = { props => <SeriesDetails {...props}  /> } />
-                <Route path = "/fav" component = {Favourites} />
-                <Route path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
-                <Route path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
-                <Route path = '/moviedetails/cast' render = { props => <CompleteCrewList {...props} /> } />
+                <Route exact path = '/movies' component = {Movie} /> 
+                <Route exact path = '/series' component = {Series} />
+                <Route exact path = '/series/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
+                <Route exact path = '/movies/moviedetails/:id'  render = { props => <MovieDetails {...props} /> } /> 
+                <Route exact path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
+                <Route exact path = '/seriesdetails/:id' render = { props => <SeriesDetails {...props}  /> } />
+                <Route exact path = "/fav" component = {Favourites} />
+                <Route exact path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
+                <Route exact path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
+                <Route exact path = '/moviedetails/:id/cast' render = { props => <CompleteCrewList {...props} /> } />
             </Switch>
         </Router>
         </>
