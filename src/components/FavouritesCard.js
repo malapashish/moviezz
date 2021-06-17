@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import db from '../config/firebase';
 import { checkRating } from '../utilities/checkRating';
-
+import { deleteFavourite } from '../utilities/deleteFavourite';
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 
@@ -37,7 +37,7 @@ const FavoritesCards = (props) => {
 
     const deleteHandler = () =>{ 
         setIsLiked(true);
-        props.deleteFavourite(props); 
+        deleteFavourite(props.id);
     }
 
     const checkWordLength = (input) => {

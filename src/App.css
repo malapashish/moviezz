@@ -285,6 +285,15 @@ input[type="text"]:focus {
 .tag.red {
   color: red;
 }
+
+.recommendation-card-section {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.recommendation-card-container {
+}
 /***************************Card styling end*******************************/
 
 /****************************Favourites cards styling start*******************************/
@@ -381,6 +390,12 @@ input[type="text"]:focus {
   margin-left: 20px;
 }
 
+.heading-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .information-section h3 {
   font-size: 40px;
   margin-bottom: 10px;
@@ -418,6 +433,7 @@ input[type="text"]:focus {
   margin-left: 50px;
   margin-top: 10px;
   width: 65vw;
+  margin-bottom: 20px;
 }
 
 .recommendation-card-container {
@@ -454,6 +470,7 @@ input[type="text"]:focus {
   margin-left: 50px;
   margin-top: 25px;
   width: 65vw;
+  margin-bottom: 20px;
 }
 
 .carousel-name {
@@ -721,3 +738,32 @@ input[type="text"]:focus {
   display: none;
 }
 /*****************************New Card Style end******************************************/
+
+/*******************************Some test code***********************/
+.favourites-button {
+  border: none;
+  padding: 0;
+  background: none;
+  color: white;
+}
+
+.recommendation-card-container {
+  padding: 10px;
+  background-color: white;
+  width: fit-content;
+  margin: 20px;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.recommendations-backdrop-image {
+  height: 200px;
+  width: 150px;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.recommendations-backdrop-image:hover {
+  transform: scale(1.15);
+  cursor: pointer;
+}

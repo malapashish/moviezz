@@ -2,6 +2,7 @@ import React , {useState , useEffect} from 'react';
  
 import '../App.css';
 import FavoritesCards from '../components/FavouritesCard'
+import { deleteFavourite } from '../utilities/deleteFavourite';
 
 import db from '../config/firebase';
 const Favorites = () => {
@@ -25,19 +26,7 @@ const Favorites = () => {
                )
            }) 
     }
-
-    const deleteFavourite = (input) => {
-        db
-            .collection('favorites')
-            .doc(input.id)
-            .delete()
-            .then(() => {
-                console.log("Successfully Deleted");
-            })
-            .catch((e) => {
-                console.log('Error removing document' , e);
-            })
-    }
+ 
 
     useEffect(() => {
         fetchMovieList();

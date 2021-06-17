@@ -6,7 +6,8 @@ import Home from './Pages/Home';
 import Favourites from './Pages/Favourites';
 import MovieDetails from './Pages/MovieDetails';
 import SeriesDetails from './Pages/SeriesDetails';
-import CompleteCrewList from './Pages/CompleteCrewList';
+import CompleteMovieCrewList from './Pages/CompleteMovieCrewList';
+import CompleteSeriesCrewList from './Pages/CompleteSeriesCrewList';
 import Movie from './Pages/Movie';
 import Series from './Pages/Series';
 import NavBar from './components/NavBar';
@@ -27,7 +28,9 @@ const App = () => {
                 <Route exact path = "/fav" component = {Favourites} />
                 <Route exact path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
                 <Route exact path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
-                <Route exact path = '/moviedetails/:id/cast' render = { props => <CompleteCrewList {...props} /> } />
+                <Route exact path = '/moviedetails/:id/cast' render = { props => <CompleteMovieCrewList {...props} /> } />
+                <Route exact path = '/seriesdetails/:id/cast' render = { props => <CompleteSeriesCrewList {...props} /> } />
+                <Route exact path = '/recommendation/:id' render = { props => <MovieDetails {...props} /> } />
             </Switch>
         </Router>
         </>

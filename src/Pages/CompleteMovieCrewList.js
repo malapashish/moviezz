@@ -1,11 +1,13 @@
 import React , { useEffect, useState } from 'react';
 
 import { movieDbAPI } from '../apis'; 
+import { useHistory } from 'react-router-dom';
 
 require('dotenv').config();
 
 const CompleteCrewList = ({ match : { params : {id} } }) => {
 
+    console.log(useHistory());
     const [ castList , setCastList ] = useState([]);
     const [ crewList , setCrewList ] = useState({})
 
