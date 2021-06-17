@@ -694,3 +694,30 @@ input[type="text"]:focus {
   }
 }
 /*****************************Media queries styling end***********************************/
+
+/*****************************New Card Style start****************************************/
+.card-container {
+  padding: 10px;
+  background-color: white;
+  width: fit-content;
+  margin: 20px;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.backdrop-image {
+  height: 300px;
+  width: 200px;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.backdrop-image:hover {
+  transform: scale(1.15);
+  cursor: pointer;
+}
+
+.test {
+  display: none;
+}
+/*****************************New Card Style end******************************************/

@@ -25,6 +25,7 @@ const MovieDetails = ({ match : { params : {id} } }) => {
                                 .get(`/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`)
                                 .then((response) => { 
                                         setMovieDetails(response.data); 
+                                        console.log(response.data);
                                     });
             }
             getDetails();

@@ -1,14 +1,16 @@
 import React, { useState , useEffect } from 'react'; 
 import db from '../config/firebase';
 import { Link } from 'react-router-dom';
+import Badge from '@material-ui/core/Badge';
 import axios from 'axios';
 import button_icon from '../images/button_icon.png';
 import { checkRating } from '../utilities/checkRating'; 
-const IMG_API = 'https://images.tmdb.org/t/p/w1280';
+const IMG_API = 'https://images.tmdb.org/t/p/w300';
 require('dotenv').config();
 
 const  Cards = (props) => { 
  
+    console.log(props);
 
     // eslint-disable-next-line no-unused-vars
     const [ isLiked , setIsLiked ] = useState(false);
@@ -88,39 +90,86 @@ const  Cards = (props) => {
     }
 
     return(
-        <div className = 'card_container'> 
-            <img  src = {props.poster_path ? IMG_API + props.poster_path : 
-                'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
-                alt = {props.title + ' poster image'} className = 'card_poster' />
-            <div className = 'movie_info'>
-                <a href = {`https://www.youtube.com/watch?v=${video}`} target = "_blank" rel="noreferrer" >
-                <img
-                alt = 'playButton_icon'
-                className = 'playButton_icon'   
-                src = {button_icon}
-                />
-                </a> 
-                <h3 className = {checkWordLength(props)}>{props.title || props.name}</h3>
-                <p className = {`rating`} >
-                    Rating:
-                    <span className = {`tag ${checkRating(props.vote_average)}`} >{props.vote_average}</span> 
-                </p> 
-                <i className = {`heart_icon ${checkIfLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
-            </div> 
+        // <div className = 'card_container'> 
+        //     <img  src = {props.poster_path ? IMG_API + props.poster_path : 
+        //         'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
+        //         alt = {props.title + ' poster image'} className = 'card_poster' />
+        //     <div className = 'movie_info'>
+        //         <a href = {`https://www.youtube.com/watch?v=${video}`} target = "_blank" rel="noreferrer" >
+        //         <img
+        //         alt = 'playButton_icon'
+        //         className = 'playButton_icon'   
+        //         src = {button_icon}
+        //         />
+        //         </a> 
+        //         <h3 className = {checkWordLength(props)}>{props.title || props.name}</h3>
+        //         <p className = {`rating`} >
+        //             Rating:
+        //             <span className = {`tag ${checkRating(props.vote_average)}`} >{props.vote_average}</span> 
+        //         </p> 
+        //         <i className = {`heart_icon ${checkIfLiked(props.title || props.name)}`} onClick = {likeHandler}></i>
+        //     </div> 
+        //         {
+        //             props.media_type === 'tv' ?
+        //             <Link className = 'read-more' to = {'/seriesdetails/' + props.id}>
+        //                 <button className = 'button read-more-button'>
+        //                     Read More..
+        //                 </button> 
+        //             </Link> : 
+        //             <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
+        //                 <button className = 'button read-more-button'>
+        //                     Read More..
+        //                 </button> 
+        //             </Link>  
+        //         }            
+        // </div>
+        
+        // <div className = 'card_container'>
+        // <div className = 'main'>
+        //     <div className = 'movie-img'>
+        //         <img  src = {props.backdrop_path ? IMG_API + props.backdrop_path : 
+        //             'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
+        //             alt = {props.title + ' backdrop image'} className = 'backimg' />
+        //         <img  src = {props.poster_path ? IMG_API + props.poster_path : 
+        //             'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
+        //             alt = {props.title + ' poster image'} className = 'movie-cover' />
+        //         <i class="fa fa-play"></i>
+        //     </div>
+        //     <h6 className = {checkWordLength(props)}>{props.title || props.name}</h6>
+        //     <div class="head1 text-center">
+        //         <p>{props.first_air_date ? 'Air Date' : 'Release Date'}</p>
+        //         <p>Rating</p>
+        //         <p>Vote Average</p>
+        //         <p>Vote Count</p>
+        //     </div>
+        // </div>
+        // </div>
+
+            <div class="card-container">
+                <div className = 'test'>
+                </div>
+                <Badge badgeContent = {props.vote_average}  color = {checkRating(props.vote_average)} >
                 {
                     props.media_type === 'tv' ?
-                    <Link className = 'read-more' to = {'/seriesdetails/' + props.id}>
-                        <button className = 'button read-more-button'>
-                            Read More..
-                        </button> 
-                    </Link> : 
-                    <Link className = 'read-more' to = {'/moviedetails/' + props.id}>
-                        <button className = 'button read-more-button'>
-                            Read More..
-                        </button> 
-                    </Link>  
-                }            
-        </div>
+                    <Link to = {'/seriesdetails/' + props.id}>
+                            <img 
+                            src = {props.poster_path ? IMG_API + props.poster_path : 
+                                'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80'}
+                                alt = {props.title + ' poster image'}
+                                className = 'backdrop-image'
+                                />
+                        </Link> :   
+                        <Link to = {'/moviedetails/' + props.id}>
+                            <img 
+                            src = {props.poster_path ? IMG_API + props.poster_path : 
+                                'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80'}
+                                alt = {props.title + ' poster image'}
+                                className = 'backdrop-image'
+                                />    
+                        </Link>                    
+                }  
+                </Badge> 
+            </div>
     )
 }
 
