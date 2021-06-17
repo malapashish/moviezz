@@ -196,7 +196,7 @@ const SeriesDetails = ({ match : { params : {id} } }) => {
                     <div className = 'recommendation-card-section'>
                         { recommendations && recommendations.map((movie) => (
                             <div className = 'card-container'>
-                                <Link to = {'/recommendation/' + movie.id}>
+                                <Link to = {'/recommendation/series/' + movie.id}>
                                 <img 
                                 src = {IMG_API + movie.poster_path}
                                 alt = {movie.name}

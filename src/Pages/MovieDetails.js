@@ -213,7 +213,7 @@ const MovieDetails = (props) => {
                     <div className = 'recommendation-card-section'>
                         { recommendations && recommendations.map((movie) => (
                             <div className = 'card-container'>
-                                <Link to = {'/recommendation/' + movie.id}>
+                                <Link to = {'/recommendation/movies/' + movie.id}>
                                 <img 
                                 src = {IMG_API + movie.poster_path}
                                 alt = {movie.name}

@@ -30,7 +30,8 @@ const App = () => {
                 <Route exact path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
                 <Route exact path = '/moviedetails/:id/cast' render = { props => <CompleteMovieCrewList {...props} /> } />
                 <Route exact path = '/seriesdetails/:id/cast' render = { props => <CompleteSeriesCrewList {...props} /> } />
-                <Route exact path = '/recommendation/:id' render = { props => <MovieDetails {...props} /> } />
+                <Route exact path = '/recommendation/movies/:id' render = { props => <MovieDetails {...props} /> } />
+                <Route exact path = '/recommendation/series/:id' render = { props => <SeriesDetails {...props} /> } />
             </Switch>
         </Router>
         </>
