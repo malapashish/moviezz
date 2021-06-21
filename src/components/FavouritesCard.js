@@ -9,6 +9,7 @@ const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 
 const FavoritesCards = (props) => { 
     const [ isLiked , setIsLiked ] = useState(false);
+    console.log(props);
     // eslint-disable-next-line no-unused-vars
     const [selectedMovies , setSelectedMovies] = useState([]);
 
@@ -62,25 +63,17 @@ const FavoritesCards = (props) => {
                 'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80' } 
                 alt = {props.title + ' poster image'} className = 'card_poster' />
             <div className = 'movie_info'>
-                <h3 className = {checkWordLength(props)}>{props.title}</h3>
+                <h3 className = {checkWordLength(props)}>{props.title || props.name}</h3>
                 <p className = {`rating`} >
                     Rating:
                     <span className = {`tag ${checkRating(props.vote_average)}`} >{props.vote_average}</span> 
                 </p>
                 <i className = {`delete_icon ${ isLiked ? 'pressed' : '' }`} onClick = {deleteHandler}></i>
-                {
-                    props.media_type === 'movie' ?
-                    <Link className = 'read-more' to = {'/moviedetails/' + props.movieId}>
-                        <button className = 'button read-more-button'>
-                            Read More..
-                        </button> 
-                    </Link> :
-                    <Link className = 'read-more' to = {'/seriesdetails/' + props.movieId}>
+                    <Link className = 'read-more' to = {`fav/details/${props.movieId + '_' + props.media_type}`}>
                         <button className = 'button read-more-button'>
                             Read More..
                         </button> 
                     </Link>
-                }   
             </div> 
         </div>
     )

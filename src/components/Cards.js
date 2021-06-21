@@ -9,25 +9,14 @@ const  Cards = (props) => {
     return( 
         <div className="card-container">
             <Badge badgeContent = {props.vote_average}  color = {checkRating(props.vote_average)} >
-            {
-                props.media_type === 'tv' ?
-                <Link to = {'/seriesdetails/' + props.id}>
-                        <img 
-                        src = {props.poster_path ? IMG_API + props.poster_path : 
-                            'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80'}
-                            alt = {props.title + ' poster image'}
-                            className = 'backdrop-image'
-                            />
-                    </Link> :   
-                    <Link to = {'/moviedetails/' + props.id}>
-                        <img 
-                        src = {props.poster_path ? IMG_API + props.poster_path : 
-                            'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80'}
-                            alt = {props.title + ' poster image'}
-                            className = 'backdrop-image'
-                            />    
-                    </Link>                    
-            }  
+                <Link to = {`/details/${props.id + '_' + props.media_type}`}>
+                            <img 
+                            src = {props.poster_path ? IMG_API + props.poster_path : 
+                                'https://images.unsplash.com/photo-1509281373149-e957c6296406?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=369&q=80'}
+                                alt = {props.title + ' poster image'}
+                                className = 'backdrop-image'
+                                />
+                </Link>     
             </Badge> 
         </div>
 

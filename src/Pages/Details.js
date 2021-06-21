@@ -11,13 +11,15 @@ import db from '../config/firebase';
 import Carousel from '../components/Carousel';
 import { deleteFavourite } from '../utilities/deleteFavourite';
 
-const IMG_API = 'https://images.tmdb.org/t/p/w1280';
+// const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 require('dotenv').config();
  
 const MovieDetails = (props) => {
 
-    const id = props.match.params.id;  
-    console.log(props);
+    const id = props.match.params.id; 
+    console.log(id); 
+    // const mediaID = id.split("_")[0];
+    // const mediaType = id.split("_")[1];
 
     const history = useHistory();
 
@@ -28,14 +30,20 @@ const MovieDetails = (props) => {
     const [ credits , setCredits ] = useState([]);
     const [ bookmarkedContent , setBookmarkedContent] = useState([]);  
     const [ message , setMessage ] = useState(null);
-    const [ isFavourite , setIsFavourite  ] = useState(false);
+    const [ isFavourite , setIsFavourite  ] = useState(false); 
+    const [ mediaID , setMediaID ] = useState(id.split("_")[0]);
+    const [ mediaType , setMediaType ] = useState(id.split("_")[1]);
     //fetches the details of the movie
     useEffect(() => {
        if(id){ 
            window.scroll(0, 0);
+           setMediaID(id.split("_")[0])
+            setMediaType(id.split("_")[1])
+
+            // setMediaType(id.split("_")[1]);
             const getDetails = async () => {
                 await movieDbAPI
-                                .get(`/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`)
+                                .get(`/${mediaType}/${mediaID}?api_key=${process.env.REACT_APP_API_KEY}`)
                                 .then((response) => { 
                                         setMovieDetails(response.data); 
                                         console.log(response.data);
@@ -58,14 +66,14 @@ const MovieDetails = (props) => {
                 }) 
             }
 
-            console.log(bookmarkedContent);
-
+            
             fetchMovieList();
+            console.log(bookmarkedContent);
  
 
             const getYoutubeLink = async () => {
                 await movieDbAPI
-                                .get(`/movie/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+                                .get(`/${mediaType}/${mediaID}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
                                 .then((response) => { 
                                     if(response.data.results.length !== 0){
                                         setVideo(response.data.results[0].key)
@@ -79,7 +87,7 @@ const MovieDetails = (props) => {
 
             const getRecommendations = async () => {
                 await movieDbAPI 
-                                .get(`/movie/${id}/recommendations?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
+                                .get(`/${mediaType}/${mediaID}/recommendations?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
                                 .then((response) => {
                                     setRecommendations(response.data.results)
                                     console.log(recommendations);
@@ -89,9 +97,10 @@ const MovieDetails = (props) => {
             
             const getCredits = async () => {
                 await movieDbAPI
-                                .get(`/movie/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+                                .get(`/${mediaType}/${mediaID}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
                                 .then((response) => {
-                                    setCredits(response.data.cast)
+                                    setCredits(response.data.cast);
+                                    console.log(response.data.cast);
                                 })
             }
             
@@ -103,17 +112,17 @@ const MovieDetails = (props) => {
     },[id])
 
     useEffect(() => { 
-        if(bookmarkedContent.some((movie) => movie.title === movieDetails.title)){
+        if(bookmarkedContent.some((movie) => movie.title === (movieDetails.original_name || movieDetails.original_title))){
             setIsFavourite(true);
         }else{
             setIsFavourite(false);
         }
     },[bookmarkedContent , movieDetails])
  
-    const handleFavorites = () => {  
+    const handleFavorites = (id) => {  
         console.log('Entered click handler'); 
-        if(bookmarkedContent.some(content =>  content.title === movieDetails.title)){ 
-            const newArray = bookmarkedContent.filter(movie => movie.title === movieDetails.title)  
+        if(bookmarkedContent.some(content =>  content.title === movieDetails.original_name)){ 
+            const newArray = bookmarkedContent.filter(movie => movie.title === (movieDetails.original_name || movieDetails.original_title))  
             deleteFavourite(newArray[0].id)
             setIsFavourite(false);
             console.log("Deleting");
@@ -122,14 +131,15 @@ const MovieDetails = (props) => {
                 setMessage(null);
             } , 1000)
         }else{
+            console.log(mediaType);
             db
             .collection('favorites')
             .add({
                 movieId : movieDetails.id,
-                title : movieDetails.title,
+                title : movieDetails.original_name || movieDetails.original_title,
                 vote_average : movieDetails.vote_average,
                 image_path : imgAPI + movieDetails.poster_path,
-                media_type : "movie"
+                mediaType : mediaType
             })
             console.log('Adding');
             setIsFavourite(true);
@@ -150,7 +160,7 @@ const MovieDetails = (props) => {
                     <img  src = {movieDetails.poster_path ?  imgAPI + movieDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
                     <div className = 'information-section'>
                         <span className = 'heading-section'>
-                            <h3>{movieDetails.title}</h3>
+                            <h3>{movieDetails.original_name || movieDetails.original_title}</h3>
                             
                              {
                                 isFavourite ? 
@@ -203,27 +213,11 @@ const MovieDetails = (props) => {
                         list = {credits}
                         />
                         <div className = 'complete-crew-section'>
-                            <Link to = {'/moviedetails/' + id + '/cast'} className = 'cast-list-link'  >
+                            <Link to = {'/details/' + id + '/cast'} className = 'cast-list-link'  >
                                 Full Crew and Cast Members
                             </Link>
                         </div>
-                    </div>
-                <div className = 'recommendation'>
-                    <h3>Recommendation:</h3>
-                    <div className = 'recommendation-card-section'>
-                        { recommendations && recommendations.map((movie) => (
-                            <div className = 'card-container'>
-                                <Link to = {'/recommendation/movies/' + movie.id}>
-                                <img 
-                                src = {IMG_API + movie.poster_path}
-                                alt = {movie.name}
-                                className = 'recommendations-backdrop-image'
-                                /> 
-                                </Link>
-                            </div>        
-                        )) }
-                    </div>  
-                </div>
+                    </div> 
             </div>
             <LikeMessages message = {message} /> 
         </> 

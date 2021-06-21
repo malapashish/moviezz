@@ -4,10 +4,8 @@ import { HashRouter as Router , Route, Switch } from "react-router-dom";
 import './App.css';
 import Home from './Pages/Home';
 import Favourites from './Pages/Favourites';
-import MovieDetails from './Pages/MovieDetails';
-import SeriesDetails from './Pages/SeriesDetails';
-import CompleteMovieCrewList from './Pages/CompleteMovieCrewList';
-import CompleteSeriesCrewList from './Pages/CompleteSeriesCrewList';
+import  Details from './Pages/Details'; 
+import CrewList from './Pages/CrewList'; 
 import Movie from './Pages/Movie';
 import Series from './Pages/Series';
 import NavBar from './components/NavBar';
@@ -20,18 +18,13 @@ const App = () => {
             <Switch>
                 <Route exact path = "/" component = {Home} />
                 <Route exact path = '/movies' component = {Movie} /> 
-                <Route exact path = '/series' component = {Series} />
-                <Route exact path = '/series/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
-                <Route exact path = '/movies/moviedetails/:id'  render = { props => <MovieDetails {...props} /> } /> 
-                <Route exact path = '/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
-                <Route exact path = '/seriesdetails/:id' render = { props => <SeriesDetails {...props}  /> } />
+                <Route exact path = '/series' component = {Series} /> 
+                <Route exact path = '/movies/details/:id'  render = { props => <Details {...props} /> } /> 
+                <Route exact path = '/series/details/:id'  render = { props => <Details {...props} /> } /> 
+                <Route exact path = '/details/:id' render = { props => <Details {...props} /> } /> 
                 <Route exact path = "/fav" component = {Favourites} />
-                <Route exact path = '/fav/moviedetails/:id' render = { props => <MovieDetails {...props} /> } />
-                <Route exact path = '/fav/seriesdetails/:id' render = { props => <SeriesDetails {...props} /> } />
-                <Route exact path = '/moviedetails/:id/cast' render = { props => <CompleteMovieCrewList {...props} /> } />
-                <Route exact path = '/seriesdetails/:id/cast' render = { props => <CompleteSeriesCrewList {...props} /> } />
-                <Route exact path = '/recommendation/movies/:id' render = { props => <MovieDetails {...props} /> } />
-                <Route exact path = '/recommendation/series/:id' render = { props => <SeriesDetails {...props} /> } />
+                <Route exact path = '/fav/details/:id' render = { props => <Details {...props} /> } /> 
+                <Route exact path = '/details/:id/cast' render = { props => <CrewList {...props} /> } /> 
             </Switch>
         </Router>
         </>

@@ -21,7 +21,7 @@ const Favorites = () => {
                         poster_path : doc.data().image_path,
                         vote_average : doc.data().vote_average,
                         movieId : doc.data().movieId,
-                        media_type : doc.data().media_type
+                        media_type : doc.data().mediaType
                    }))
                )
            }) 

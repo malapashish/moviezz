@@ -5,15 +5,19 @@ import { useHistory } from 'react-router-dom';
 
 require('dotenv').config();
 
-const CompleteCrewList = ({ match : { params : {id} } }) => {
+const CompleteCrewList = (props) => {
 
+    const id = props.match.params.id;
+    const mediaID = id.split("_")[0];
+    const mediaType = id.split("_")[1];
+    console.log(props);
     console.log(useHistory());
     const [ castList , setCastList ] = useState([]);
     const [ crewList , setCrewList ] = useState({})
 
     useEffect(() => {
         movieDbAPI
-                    .get(`/movie/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)                
+                    .get(`/${mediaType}/${mediaID}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)                
                     .then((response) => {
                         setCastList(response.data.cast);
                         filterCrew(response.data.crew);
@@ -22,6 +26,7 @@ const CompleteCrewList = ({ match : { params : {id} } }) => {
     },[])
 
 
+    //sort the crew based on the their department
     const filterCrew = (list) => {
         const production = list.filter((crewMember) => crewMember.department === 'Production')   
         const writing = list.filter((crewMember) => crewMember.department === 'Writing')
