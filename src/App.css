@@ -451,6 +451,24 @@ input[type="text"]:focus {
   width: 130px;
   height: 200px;
 }
+
+.go-back-button {
+  height: 150px;
+  width: 30px;
+  position: fixed;
+  top: 50%;
+  left: 0%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0px 10px 10px 0px;
+  border: none;
+  font-size: 35px;
+  transition: all 0.5s;
+}
+
+.go-back-button:hover {
+  background-color: #373b69;
+}
+
 /****************************Details page styling end******************************/
 
 /****************************Carousal styling start******************************/
@@ -567,17 +585,6 @@ input[type="text"]:focus {
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 0px 0px 10px 10px;
 }
-
-/* .cast-card-container {
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-  width: 130px;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-  border-radius: 10px;
-} */
 
 /*****************************Crew List Page styling end******************************/
 

@@ -112,7 +112,7 @@ const MovieDetails = (props) => {
     },[id])
 
     useEffect(() => { 
-        if(bookmarkedContent.some((movie) => movie.title === (movieDetails.original_name || movieDetails.original_title))){
+        if(bookmarkedContent.some((movie) => movie.title === (movieDetails.name || movieDetails.title))){
             setIsFavourite(true);
         }else{
             setIsFavourite(false);
@@ -121,8 +121,8 @@ const MovieDetails = (props) => {
  
     const handleFavorites = (id) => {  
         console.log('Entered click handler'); 
-        if(bookmarkedContent.some(content =>  content.title === movieDetails.original_name)){ 
-            const newArray = bookmarkedContent.filter(movie => movie.title === (movieDetails.original_name || movieDetails.original_title))  
+        if(bookmarkedContent.some(content =>  content.title === movieDetails.name)){ 
+            const newArray = bookmarkedContent.filter(movie => movie.title === (movieDetails.name || movieDetails.title))  
             deleteFavourite(newArray[0].id)
             setIsFavourite(false);
             console.log("Deleting");
@@ -136,7 +136,7 @@ const MovieDetails = (props) => {
             .collection('favorites')
             .add({
                 movieId : movieDetails.id,
-                title : movieDetails.original_name || movieDetails.original_title,
+                title : movieDetails.name || movieDetails.title,
                 vote_average : movieDetails.vote_average,
                 image_path : imgAPI + movieDetails.poster_path,
                 mediaType : mediaType
@@ -160,7 +160,7 @@ const MovieDetails = (props) => {
                     <img  src = {movieDetails.poster_path ?  imgAPI + movieDetails.poster_path : 'https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg'} alt = 'Poster_Image' className = 'poster-image' />
                     <div className = 'information-section'>
                         <span className = 'heading-section'>
-                            <h3>{movieDetails.original_name || movieDetails.original_title}</h3>
+                            <h3>{movieDetails.name || movieDetails.title}</h3>
                             
                              {
                                 isFavourite ? 
@@ -204,8 +204,8 @@ const MovieDetails = (props) => {
                     </div>
                 </div>
                     <div className = 'carouselSection'>
-                        <button onClick = {() => history.goBack()}>
-                            Go Back
+                        <button className = 'go-back-button' onClick = {() => history.goBack()}>
+                            <i class="fas fa-angle-left"></i>
                         </button>
                         <h3>Cast Details:</h3>
                         <span>Main Cast</span>

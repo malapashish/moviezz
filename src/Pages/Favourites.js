@@ -37,7 +37,7 @@ const Favorites = () => {
            <div className = 'movie-container'> 
             {
                 selectedMovies && selectedMovies.map((movie) => <FavoritesCards key = {movie.id} {...movie} deleteFavourite = {deleteFavourite} />)
-            }
+            } 
            </div>
         </>
     )
