@@ -1,15 +1,18 @@
 import React , { useState , useEffect } from 'react'; 
+import { connect } from 'react-redux';
+import { fetchData } from '../../actions';
 
 import Cards from '../../components/Cards';
 import CustomPagination from '../../components/Pagination';
 // import LikeMessages from '../../components/LikeMessages'; 
+import { Spinner } from '../../components/Spinner';
 import LikeMessages from '../../components/LikeMessages';
 import db from '../../utilities/firebase';
 import { movieDbAPI , imgAPI } from '../../apis';  
 
 require('dotenv').config();  
 
-const Home = () => {
+const Home = (props) => {
     const [ page, setPage ] = useState(1);
     const [ contentList , setContentList ] = useState([]); 
     const [ favoriteContent , setFavoriteContent] = useState([]);
@@ -18,7 +21,9 @@ const Home = () => {
  
 
     //fetches the movie and series list also fetches favoured movie and series list
-    useEffect(() => {
+    useEffect(() => { 
+        props.fetchTrendList(page);
+        // console.log(props);
         const getTrendingList = async () => {
         await movieDbAPI
                         .get(`/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)
@@ -29,6 +34,7 @@ const Home = () => {
         getTrendingList();
         fetchFavourites();
         window.scroll(0, 0); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
     
     //fetches favoured movie and list
@@ -92,9 +98,24 @@ const Home = () => {
                 </div>
             )
         }
+        {console.log('Data : ' , props.trendingList)}
+        <Spinner display = {props.trendingList.loading} />
         <CustomPagination  setPage = {setPage} />
         </>
     )
-}
+};
 
-export default Home;
+const mapStateToProps = state => {
+    console.log(state);
+    return{
+        trendingList : state.trendingList
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchTrendList : (page) => dispatch(fetchData(page))
+    }
+};
+
+export default connect(mapStateToProps , mapDispatchToProps)(Home);

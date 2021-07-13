@@ -1,5 +1,7 @@
 import React  from 'react';  
 import { HashRouter as Router , Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from './store';
 
 import './App.css';
 import Home from './containers/Pages/Home';
@@ -13,6 +15,7 @@ import NavBar from './containers/NavBar';
 const App = () => { 
     return(
         <>
+        <Provider store = {store} >
         <Router>
             <NavBar />
             <Switch>
@@ -27,6 +30,7 @@ const App = () => {
                 <Route exact path = '/details/:id/cast' render = { props => <CrewList {...props} /> } /> 
             </Switch>
         </Router>
+        </Provider>
         </>
     )
 }

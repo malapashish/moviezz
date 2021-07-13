@@ -774,3 +774,37 @@ input[type="text"]:focus {
   transform: scale(1.15);
   cursor: pointer;
 }
+
+/*****************************Spinner start****************************************/
+.spinner-parent {
+  width: 150px;
+  height: 150px;
+  z-index: 2;
+}
+
+.loading {
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  align-items: center;
+}
+
+.loading::after {
+  content: "";
+  width: 120px;
+  height: 120px;
+  border: 10px solid #dddddd;
+  border-top-color: #009579;
+  border-radius: 50%;
+  animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(1turn);
+  }
+}
+/*****************************Spinner end******************************************/
