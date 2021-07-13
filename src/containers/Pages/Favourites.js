@@ -1,10 +1,9 @@
 import React , {useState , useEffect} from 'react';
- 
-import '../App.css';
-import FavoritesCards from '../components/FavouritesCard'
-import { deleteFavourite } from '../utilities/deleteFavourite';
+   
+import FavoritesCards from '../FavouritesCard';
+import { deleteFavourite } from '../../utilities/deleteFavourite';
 
-import db from '../config/firebase';
+import db from '../../utilities/firebase';
 const Favorites = () => {
     
     const [ selectedMovies , setSelectedMovies ] = useState([]);

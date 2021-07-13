@@ -1,6 +1,6 @@
 import React , { useEffect, useState } from 'react';
 
-import { movieDbAPI } from '../apis'; 
+import { movieDbAPI } from '../../apis'; 
 import { useHistory } from 'react-router-dom';
 
 require('dotenv').config();

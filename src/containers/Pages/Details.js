@@ -4,22 +4,19 @@ import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";  
 import BookmarkOutlinedIcon from '@material-ui/icons/BookmarkOutlined';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import { checkRating } from '../utilities/checkRating';
-import { movieDbAPI , imgAPI } from '../apis';
-import LikeMessages from '../components/LikeMessages'; 
-import db from '../config/firebase';
-import Carousel from '../components/Carousel';
-import { deleteFavourite } from '../utilities/deleteFavourite';
+import { checkRating } from '../../utilities/checkRating';
+import { movieDbAPI , imgAPI } from '../../apis';
+import LikeMessages from '../../components/LikeMessages'; 
+import db from '../../utilities/firebase';
+import Carousel from '../../components/Carousel';
+import { deleteFavourite } from '../../utilities/deleteFavourite';
 
 // const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 require('dotenv').config();
  
 const MovieDetails = (props) => {
 
-    const id = props.match.params.id; 
-    console.log(id); 
-    // const mediaID = id.split("_")[0];
-    // const mediaType = id.split("_")[1];
+    const id = props.match.params.id;  
 
     const history = useHistory();
 
@@ -38,9 +35,7 @@ const MovieDetails = (props) => {
        if(id){ 
            window.scroll(0, 0);
            setMediaID(id.split("_")[0])
-            setMediaType(id.split("_")[1])
-
-            // setMediaType(id.split("_")[1]);
+            setMediaType(id.split("_")[1]) 
             const getDetails = async () => {
                 await movieDbAPI
                                 .get(`/${mediaType}/${mediaID}?api_key=${process.env.REACT_APP_API_KEY}`)

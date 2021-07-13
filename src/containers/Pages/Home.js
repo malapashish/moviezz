@@ -1,11 +1,11 @@
 import React , { useState , useEffect } from 'react'; 
 
-import Cards from '../components/Cards';
-import CustomPagination from '../components/Pagination';
-import LikeMessages from '../components/LikeMessages'; 
-import db from '../config/firebase';
-import { movieDbAPI , imgAPI } from '../apis'; 
-import '../App.css'; 
+import Cards from '../../components/Cards';
+import CustomPagination from '../../components/Pagination';
+// import LikeMessages from '../../components/LikeMessages'; 
+import LikeMessages from '../../components/LikeMessages';
+import db from '../../utilities/firebase';
+import { movieDbAPI , imgAPI } from '../../apis';  
 
 require('dotenv').config();  
 

@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from 'react'; 
 import { Link } from 'react-router-dom';
 
-import db from '../config/firebase';
+import db from '../utilities/firebase';
 import { checkRating } from '../utilities/checkRating';
 import { deleteFavourite } from '../utilities/deleteFavourite';
 const IMG_API = 'https://images.tmdb.org/t/p/w1280';

@@ -1,10 +1,10 @@
 import React , { useState , useEffect } from 'react';
-import db from '../config/firebase'; 
-import LikeMessages from '../components/LikeMessages';
-import Cards from '../components/Cards';
-import { movieDbAPI } from '../apis';
-import { useDebounce } from '../utilities/useDebounce';
-import duckSearching from '../images/duck_searching.gif'
+import db from '../../utilities/firebase'; 
+import LikeMessages from '../../components/LikeMessages';
+import Cards from '../../components/Cards';
+import { movieDbAPI } from '../../apis';
+import { useDebounce } from '../../utilities/useDebounce';
+import duckSearching from '../../images/duck_searching.gif';    
 require('dotenv').config(); 
 
 
