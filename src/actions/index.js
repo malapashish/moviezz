@@ -3,6 +3,8 @@ import axios from 'axios';
 import { FETCH_DATA_REQUEST , FETCH_DATA_SUCCESS , FETCH_DATA_FAILURE } from "../actionTypes";
 require('dotenv').config();
 
+
+/*Action Creators for fetching trending data list*/
 const fetchDataRequest = () => {
     return{
         type : FETCH_DATA_REQUEST
@@ -34,5 +36,7 @@ export const fetchData = (page) => {
                  fetchDataFailure(error.message)
              })
     }
-}
+} 
+
+
 
