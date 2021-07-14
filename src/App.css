@@ -292,8 +292,6 @@ input[type="text"]:focus {
   overflow-y: hidden;
 }
 
-.recommendation-card-container {
-}
 /***************************Card styling end*******************************/
 
 /****************************Favourites cards styling start*******************************/
@@ -482,6 +480,7 @@ input[type="text"]:focus {
   border-radius: 10px;
   margin-bottom: 5px;
   box-shadow: 0px 0px 5px black;
+  max-width: 200px;
 }
 
 .carouselSection {

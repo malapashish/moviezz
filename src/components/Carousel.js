@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const Carousel = ({ list }) => {
   const handleDragStart = (e) => e.preventDefault();
-
+  console.log(list);
   const responsive = {
     0: {
       items: 3,
@@ -39,7 +39,7 @@ const Carousel = ({ list }) => {
 
   return (
     <>
-      {carouselList.length < 2 ? (
+      {carouselList.length < 5 ? (
         <div className="alert">
           <span>Cast Details are not available</span>
         </div>

@@ -10,6 +10,7 @@ import LikeMessages from "../../components/LikeMessages";
 import db from "../../utilities/firebase";
 import Carousel from "../../components/Carousel";
 import { deleteFavourite } from "../../utilities/deleteFavourite";
+import { Spinner } from "../../components/Spinner";
 
 /*Redux imports*/
 import { connect } from "react-redux";
@@ -227,6 +228,9 @@ const MovieDetails = (props) => {
         </div>
       </div>
       <LikeMessages message={message} />
+      <Spinner
+        display={props.bookMarkedList.loading && props.detailsList.loading}
+      />
     </>
   );
 };
