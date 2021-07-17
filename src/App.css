@@ -251,19 +251,32 @@ input[type="text"]:focus {
 }
 
 .snackbar {
-  visibility: hidden; /* Hidden by default. Visible on click */
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: rgba(0, 255, 200, 0.8); /* Black background color */
-  color: #fff; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 2px; /* Rounded borders */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
+  z-index: 1;
+  position: absolute;
+  visibility: hidden;
+  left: 42%;
+  top: 90%;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  bottom: 100%;
+  transition: all 500ms ease-in;
+  border-radius: 10px;
 }
+
+.snackbar.going-up {
+  visibility: visible;
+  background-color: #f50057;
+  top: 85%;
+}
+
+.snackbar.going-down {
+  visibility: visible;
+  bottom: 110%;
+}
+
+*/
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
 .snackbar.show {
@@ -332,6 +345,26 @@ input[type="text"]:focus {
 .delete_icon:hover {
   animation: size 0.4s;
   color: #e23b3b;
+}
+
+.favourites-card-container {
+  padding: 10px;
+  background-color: white;
+  width: fit-content;
+  margin: 20px;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.favourites-backdrop-image {
+  height: 300px;
+  width: 200px;
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+
+.test {
+  display: none;
 }
 /****************************Favourites cards styling end*******************************/
 
@@ -776,19 +809,22 @@ input[type="text"]:focus {
 
 /*****************************Spinner start****************************************/
 .spinner-parent {
-  width: 150px;
-  height: 150px;
-  z-index: 2;
+  width: 100%;
+  height: 150%;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loading {
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  align-items: center;
+  justify-content: center;
+  /* position: absolute; */
+  /* top: 50%;
+  left: 45%; */
 }
 
 .loading::after {
@@ -806,4 +842,5 @@ input[type="text"]:focus {
     transform: rotate(1turn);
   }
 }
+
 /*****************************Spinner end******************************************/

@@ -6,18 +6,18 @@ import BookmarkOutlinedIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { checkRating } from "../../utilities/checkRating";
 import { movieDbAPI, imgAPI } from "../../apis";
-import LikeMessages from "../../components/LikeMessages";
-import db from "../../utilities/firebase";
+import Snackbar from "../../components/LikeMessages";
 import Carousel from "../../components/Carousel";
-import { deleteFavourite } from "../../utilities/deleteFavourite";
 import { Spinner } from "../../components/Spinner";
+
+import { addBookmarked } from "../../firebase/addBookmarked";
+import { deleteBookmarked } from "../../firebase/deleteBookmarked";
 
 /*Redux imports*/
 import { connect } from "react-redux";
 import { fetchDetails } from "../../actions/detailsAction";
-import { fetchBookmarked } from "../../actions/bookmarkedAction";
+import { fetchBookmarked } from "../../actions/fetchbookmarkedAction";
 
-// const IMG_API = 'https://images.tmdb.org/t/p/w1280';
 require("dotenv").config();
 
 const MovieDetails = (props) => {
@@ -71,13 +71,16 @@ const MovieDetails = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
+  const checkIfExists = (title, bookMarkedList) => {
+    return bookMarkedList.some((media) => media.title === title);
+  };
+
   useEffect(() => {
     if (
-      props.bookMarkedList.data.some(
-        (movie) =>
-          movie.title ===
-          (props.detailsList.mediaDetails.name ||
-            props.detailsList.mediaDetails.title)
+      checkIfExists(
+        props.detailsList.mediaDetails.name ||
+          props.detailsList.mediaDetails.title,
+        props.bookMarkedList.data
       )
     ) {
       setIsFavourite(true);
@@ -85,7 +88,7 @@ const MovieDetails = (props) => {
       setIsFavourite(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.bookMarkedList.mediaDetails]);
+  }, [props.bookMarkedList, props.detailsList]);
 
   const handleFavorites = () => {
     if (
@@ -102,31 +105,19 @@ const MovieDetails = (props) => {
           (props.detailsList.mediaDetails.name ||
             props.detailsList.mediaDetails.title)
       );
-      deleteFavourite(newArray[0].id);
-      console.log("Deleted");
-      setIsFavourite(false);
-      setMessage("Removed from favourites");
-      setTimeout(() => {
-        setMessage(null);
-      }, 1000);
-      props.fetchBookmarked();
-    } else {
-      db.collection("favorites").add({
-        movieId: props.detailsList.mediaDetails.id,
-        title:
-          props.detailsList.mediaDetails.name ||
-          props.detailsList.mediaDetails.title,
-        vote_average: props.detailsList.mediaDetails.vote_average,
-        image_path: imgAPI + props.detailsList.mediaDetails.poster_path,
-        mediaType: mediaType,
+      deleteBookmarked(newArray[0].id).then(() => {
+        setIsFavourite(!isFavourite);
+        props.fetchBookmarked();
+        setMessage("Removed from favourites");
       });
-      console.log("Added");
-      setIsFavourite(true);
-      setMessage("Added to favourites");
-      setTimeout(() => {
-        setMessage(null);
-      }, 1000);
-      props.fetchBookmarked();
+    } else {
+      addBookmarked({ ...props.detailsList.mediaDetails, mediaType }).then(
+        () => {
+          setIsFavourite(!isFavourite);
+          props.fetchBookmarked();
+          setMessage("Added to favourites");
+        }
+      );
     }
   };
 
@@ -227,16 +218,13 @@ const MovieDetails = (props) => {
           </div>
         </div>
       </div>
-      <LikeMessages message={message} />
-      <Spinner
-        display={props.bookMarkedList.loading && props.detailsList.loading}
-      />
+      {message && <Snackbar message={message} time={500} />}
+      {props.bookMarkedList.loading ? <Spinner /> : ""}
     </>
   );
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     detailsList: state.detailsList,
     bookMarkedList: state.bookMarkedList,
@@ -245,8 +233,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchDetails: (mediaType, mediaID) =>
-      dispatch(fetchDetails(mediaType, mediaID)),
+    fetchDetails: (mediaType, mediaID) => {
+      dispatch(fetchDetails(mediaType, mediaID));
+    },
     fetchBookmarked: () => dispatch(fetchBookmarked()),
   };
 };

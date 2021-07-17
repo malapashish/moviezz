@@ -6,7 +6,6 @@ require("dotenv").config();
 
 const Carousel = ({ list }) => {
   const handleDragStart = (e) => e.preventDefault();
-  console.log(list);
   const responsive = {
     0: {
       items: 3,

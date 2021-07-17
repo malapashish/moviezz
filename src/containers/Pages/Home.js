@@ -23,11 +23,14 @@ const Home = (props) => {
         Trending
       </span>
       <div className="movie-container">
-        {props.trendingList.trendingListData.map((content) => (
-          <Cards key={content.id} {...content} />
-        ))}
+        {props.trendingList.loading ? (
+          <Spinner />
+        ) : (
+          props.trendingList.trendingListData.map((content) => (
+            <Cards key={content.id} {...content} />
+          ))
+        )}
       </div>
-      <Spinner display={props.trendingList.loading} />
       <CustomPagination setPage={setPage} />
     </>
   );
