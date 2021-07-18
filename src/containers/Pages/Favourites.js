@@ -1,33 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import FavoritesCards from "../FavouritesCard";
-import { deleteFavourite } from "../../utilities/deleteFavourite";
 import { fetchBookmarked } from "../../actions/fetchbookmarkedAction";
-import { Spinner } from "../../components/Spinner";
 
-import db from "../../utilities/firebase";
 const Favorites = (props) => {
-  const [selectedMovies, setSelectedMovies] = useState([]);
-
-  const fetchMovieList = () => {
-    db.collection("favorites").onSnapshot((q) => {
-      setSelectedMovies(
-        q.docs.map((doc) => ({
-          id: doc.id,
-          title: doc.data().title,
-          poster_path: doc.data().image_path,
-          vote_average: doc.data().vote_average,
-          movieId: doc.data().movieId,
-          media_type: doc.data().mediaType,
-        }))
-      );
-    });
-  };
-
   useEffect(() => {
     // fetchMovieList();
     props.fetchBookMarkedList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
