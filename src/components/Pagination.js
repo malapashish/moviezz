@@ -8,7 +8,7 @@ const darkTheme = createMuiTheme({
   },
 });
 
-const Paginatio = ({ setPage, numOfPages = 50 }) => { 
+const Paginatio = ({ setPage, numOfPages = 50 }) => {
   const handlePageChange = (page) => {
     setPage(page);
     window.scroll(0, 0);
@@ -21,7 +21,7 @@ const Paginatio = ({ setPage, numOfPages = 50 }) => {
         display: "flex",
         justifyContent: "center",
         marginTop: 10,
-        marginBottom : 20
+        marginBottom: 20,
       }}
     >
       <ThemeProvider theme={darkTheme}>
@@ -35,6 +35,6 @@ const Paginatio = ({ setPage, numOfPages = 50 }) => {
       </ThemeProvider>
     </div>
   );
-}
+};
 
 export default Paginatio;

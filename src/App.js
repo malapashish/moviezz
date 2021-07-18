@@ -1,18 +1,21 @@
 import React  from 'react';  
 import { HashRouter as Router , Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from './store';
 
 import './App.css';
-import Home from './Pages/Home';
-import Favourites from './Pages/Favourites';
-import  Details from './Pages/Details'; 
-import CrewList from './Pages/CrewList'; 
-import Movie from './Pages/Movie';
-import Series from './Pages/Series';
-import NavBar from './components/NavBar';
+import Home from './containers/Pages/Home';
+import Favourites from './containers/Pages/Favourites';
+import  Details from './containers/Pages/Details'; 
+import CrewList from './containers/Pages/CrewList'; 
+import Movie from './containers/Pages/Movie';
+import Series from './containers/Pages/Series';
+import NavBar from './containers/NavBar';
 
 const App = () => { 
     return(
         <>
+        <Provider store = {store} >
         <Router>
             <NavBar />
             <Switch>
@@ -27,6 +30,7 @@ const App = () => {
                 <Route exact path = '/details/:id/cast' render = { props => <CrewList {...props} /> } /> 
             </Switch>
         </Router>
+        </Provider>
         </>
     )
 }

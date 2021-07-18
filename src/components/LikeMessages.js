@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 
-const LikeMessages = ({ message }) => {
+const Snackbar = ({ message, color, time }) => {
+  const [messageToDisplay, setMessageToDisplay] = useState(message);
+  const [up, setUp] = useState("Nothing");
+  let timer1;
+  let timer2;
+  useEffect(() => {
+    setMessageToDisplay(message);
+    setUp("");
+    clearTimeout(timer1);
+    clearTimeout(timer2);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message]);
 
-    if(message === null){
-        return ''
-    }else {
-        return(
-            <div className = 'snackbar show'>
-                {message}
-            </div>
-        )
-    }
+  timer2 = setTimeout(() => {
+    setUp(null);
+    console.log("Null timer Started");
+  }, time);
 
+  timer1 = setTimeout(() => {
+    setMessageToDisplay(null);
+    console.log("Message timer started");
+  }, 450 + time);
 
+  if (up === null) {
+    return <div className={`snackbar going-down`}>{messageToDisplay}</div>;
+  } else {
+    return <div className={`snackbar going-up`}>{messageToDisplay}</div>;
+  }
+};
 
-}
-
-export default LikeMessages;
+export default Snackbar;
