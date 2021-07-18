@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Button } from "@material-ui/core";
-import YouTubeIcon from "@material-ui/icons/YouTube";
-import BookmarkOutlinedIcon from "@material-ui/icons/BookmarkOutlined";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import { checkRating } from "../../utilities/checkRating";
+import { voteRating } from "../../utilities/checkRating";
 import { movieDbAPI, imgAPI } from "../../apis";
 import Snackbar from "../../components/LikeMessages";
 import Carousel from "../../components/Carousel";
 import { Spinner } from "../../components/Spinner";
+import YouTubeButton from "../../components/YouTubeTrailerButton";
+import BookmarkButton from "../../components/BookmarkButton";
 
 import { addBookmarked } from "../../firebase/addBookmarked";
 import { deleteBookmarked } from "../../firebase/deleteBookmarked";
@@ -90,20 +88,14 @@ const MovieDetails = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.bookMarkedList, props.detailsList]);
 
-  const handleFavorites = () => {
+  const handleFavorites = (mediaName, bookMarkedList) => {
     if (
-      props.bookMarkedList.data.some(
-        (content) =>
-          content.title ===
-          (props.detailsList.mediaDetails.title ||
-            props.detailsList.mediaDetails.name)
+      bookMarkedList.some(
+        (content) => content.title === (mediaName.title || mediaName.name)
       )
     ) {
-      const newArray = props.bookMarkedList.data.filter(
-        (movie) =>
-          movie.title ===
-          (props.detailsList.mediaDetails.name ||
-            props.detailsList.mediaDetails.title)
+      const newArray = bookMarkedList.filter(
+        (movie) => movie.title === (mediaName.name || mediaName.title)
       );
       deleteBookmarked(newArray[0].id).then(() => {
         setIsFavourite(!isFavourite);
@@ -111,13 +103,11 @@ const MovieDetails = (props) => {
         setMessage("Removed from favourites");
       });
     } else {
-      addBookmarked({ ...props.detailsList.mediaDetails, mediaType }).then(
-        () => {
-          setIsFavourite(!isFavourite);
-          props.fetchBookmarked();
-          setMessage("Added to favourites");
-        }
-      );
+      addBookmarked({ ...mediaName, mediaType }).then(() => {
+        setIsFavourite(!isFavourite);
+        props.fetchBookmarked();
+        setMessage("Added to favourites");
+      });
     }
   };
 
@@ -149,21 +139,12 @@ const MovieDetails = (props) => {
                 {props.detailsList.mediaDetails.name ||
                   props.detailsList.mediaDetails.title}
               </h3>
-              {isFavourite ? (
-                <button
-                  className="favourites-button"
-                  onClick={() => handleFavorites(id)}
-                >
-                  <BookmarkOutlinedIcon fontSize="large" />
-                </button>
-              ) : (
-                <button
-                  className="favourites-button"
-                  onClick={() => handleFavorites()}
-                >
-                  <BookmarkBorderIcon fontSize="large" />
-                </button>
-              )}
+              <BookmarkButton
+                isAlreadyExists={isFavourite}
+                mediaDetails={props.detailsList.mediaDetails}
+                bookmarkedList={props.bookMarkedList.data}
+                handleFavorites={handleFavorites}
+              />
             </span>
             <section className="summary-section">
               <h4 className="summary-title">Summary:</h4>
@@ -179,7 +160,7 @@ const MovieDetails = (props) => {
               <section className="movie-voting-average">
                 <p>Voting Average</p>
                 <p
-                  className={`tag ${checkRating(
+                  className={`tag ${voteRating(
                     props.detailsList.mediaDetails.vote_average
                   )}`}
                 >
@@ -187,19 +168,11 @@ const MovieDetails = (props) => {
                 </p>
               </section>
               <section className="movie-trailer">
-                {linkAvailability ? (
-                  <Button
-                    variant="contained"
-                    startIcon={<YouTubeIcon />}
-                    color="secondary"
-                    target="__blank"
-                    href={`https://www.youtube.com/watch?v=${video}`}
-                  >
-                    Watch the Trailer
-                  </Button>
-                ) : (
-                  ""
-                )}
+                <YouTubeButton
+                  video_id={video}
+                  text="Watch The Trailer"
+                  linkAvailability={linkAvailability}
+                />
               </section>
             </section>
           </div>
