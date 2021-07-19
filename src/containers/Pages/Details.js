@@ -178,7 +178,7 @@ const MovieDetails = (props) => {
           {message && <Snackbar message={message} time={500} />}
         </div>
       </div>
-      {props.bookMarkedList.loading && <Spinner />}
+      {props.bookMarkedList.loading && props.detailsList.loading && <Spinner />}
     </>
   );
 };

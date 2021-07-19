@@ -10,7 +10,9 @@ import { fetchSearchedMovies } from "../../actions/searchedMoviesAction";
 require("dotenv").config();
 
 const Movie = (props) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(
+    sessionStorage.getItem("searchMovieTerm") || ""
+  );
   const [isSearching, setIsSearching] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
@@ -28,6 +30,7 @@ const Movie = (props) => {
 
   const handleSearchTerm = (e) => {
     setSearchTerm(e.target.value);
+    sessionStorage.setItem("searchMovieTerm", e.target.value);
     props.fetchSearchResults(searchTerm);
   };
 

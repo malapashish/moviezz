@@ -9,7 +9,9 @@ import { fetchSearchedSeries } from "../../actions/searchSeriesAction";
 require("dotenv").config();
 
 const Series = (props) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(
+    sessionStorage.getItem("searchTvTerm") || ""
+  );
   const [isSearching, setIsSearching] = useState(false);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
@@ -27,6 +29,7 @@ const Series = (props) => {
 
   const handleSearchTerm = (e) => {
     setSearchTerm(e.target.value);
+    sessionStorage.setItem("searchTvTerm", e.target.value);
     props.fetchSearchResults(searchTerm);
   };
 
