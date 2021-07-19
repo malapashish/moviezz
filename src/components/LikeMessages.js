@@ -15,12 +15,10 @@ const Snackbar = ({ message, color, time }) => {
 
   timer2 = setTimeout(() => {
     setUp(null);
-    console.log("Null timer Started");
   }, time);
 
   timer1 = setTimeout(() => {
     setMessageToDisplay(null);
-    console.log("Message timer started");
   }, 450 + time);
 
   if (up === null) {

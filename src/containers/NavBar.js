@@ -18,10 +18,10 @@ const NavBar = () => {
       <NavLink to="/fav" className="nav-link" activeClassName="active">
         Favorites
       </NavLink>
-      <NavLink to="/movies" className="nav-link" activeClassName="active">
+      <NavLink to="/movie" className="nav-link" activeClassName="active">
         Movies
       </NavLink>
-      <NavLink to="/series" className="nav-link" activeClassName="active">
+      <NavLink to="/tv" className="nav-link" activeClassName="active">
         Series
       </NavLink>
       <IconContext.Provider value={{ size: "30px" }}>

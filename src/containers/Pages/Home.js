@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchData } from "../../actions";
+import { fetchData } from "../../actions/fetchTrendingListAction";
 
 import Cards from "../../components/Cards";
 import CustomPagination from "../../components/Pagination";
@@ -23,15 +23,10 @@ const Home = (props) => {
         Trending
       </span>
       <div className="movie-container">
-        {props.trendingList.loading ? (
-          <Spinner />
-        ) : (
-          props.trendingList.trendingListData.map((content) => (
-            <Cards key={content.id} {...content} />
-          ))
-        )}
+        <Cards contentArray={props.trendingList.trendingListData} />
       </div>
       <CustomPagination setPage={setPage} />
+      {props.trendingList.loading && <Spinner />}
     </>
   );
 };

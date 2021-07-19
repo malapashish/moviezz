@@ -1,21 +1,31 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import FavoritesCards from "../FavouritesCard";
+import FavoritesCards from "../../components/FavouritesCard";
 import { fetchBookmarked } from "../../actions/fetchbookmarkedAction";
+import { deleteBookmarked } from "../../firebase/deleteBookmarked";
+import { Spinner } from "../../components/Spinner";
 
-const Favorites = (props) => {
+const Favorites = ({ fetchBookMarkedList, bookMarkedList }) => {
   useEffect(() => {
-    // fetchMovieList();
-    props.fetchBookMarkedList();
+    fetchBookMarkedList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const deleteHandler = (id) => {
+    deleteBookmarked(id).then(() => {
+      fetchBookMarkedList();
+    });
+  };
 
   return (
     <>
       <div className="movie-container">
-        {console.log(props.bookMarkedList)}
-        <FavoritesCards />
+        <FavoritesCards
+          deleteHandler={deleteHandler}
+          bookMarkedList={bookMarkedList.data}
+        />
+        {bookMarkedList.loading && <Spinner />}
       </div>
     </>
   );

@@ -252,7 +252,7 @@ input[type="text"]:focus {
 
 .snackbar {
   z-index: 1;
-  position: absolute;
+  position: fixed;
   visibility: hidden;
   left: 42%;
   top: 90%;
@@ -626,7 +626,7 @@ input[type="text"]:focus {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  width: 500px;
+  width: 200px;
 }
 /****************************Search Movies and Series section styling end****************/
 
@@ -784,6 +784,7 @@ input[type="text"]:focus {
   padding: 0;
   background: none;
   color: white;
+  cursor: pointer;
 }
 
 .recommendation-card-container {

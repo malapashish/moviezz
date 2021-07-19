@@ -28,7 +28,6 @@ export const fetchBookmarked = () => {
           poster_path: doc.data().image_path,
           vote_average: doc.data().vote_average,
         }));
-        console.log(bookMarkedList);
         dispatch(fetchBookmarkSuccess(bookMarkedList));
       });
   };

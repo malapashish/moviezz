@@ -1,84 +1,39 @@
 import React, { useState, useEffect } from "react";
 
-import { movieDbAPI } from "../../apis";
-import db from "../../utilities/firebase";
-import LikeMessages from "../../components/LikeMessages";
 import Cards from "../../components/Cards";
 import { useDebounce } from "../../utilities/useDebounce";
 import duckSearching from "../../images/duck_searching.gif";
+
+import { connect } from "react-redux";
+import { fetchSearchedMovies } from "../../actions/searchedMoviesAction";
+
 require("dotenv").config();
 
-const Movie = () => {
+const Movie = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [movies, setMoviesList] = useState([]);
-  const [favouriteContent, setFavouriteContent] = useState([]);
-  const [repeatedLiked, setRepeatedLiked] = useState(null);
-  const [message, setMessage] = useState(null);
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      const getMovies = async (term) => {
-        await movieDbAPI
-          .get(
-            `search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${term}`
-          )
-          .then((response) => {
-            setMoviesList(response.data.results);
-            setIsSearching(false);
-          });
-      };
-      getMovies(debouncedSearchTerm);
-      setIsSearching(true);
-      fetchMovieList();
+      props.fetchSearchResults(debouncedSearchTerm);
+      setIsSearching(false);
     } else {
-      setMoviesList([]);
+      setIsSearching(true);
+      props.fetchSearchResults("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm]);
-
-  const IMG_API = "https://images.tmdb.org/t/p/w1280";
 
   const handleSearchTerm = (e) => {
     setSearchTerm(e.target.value);
-  };
-
-  const handleFavourite = (input) => {
-    if (favouriteContent.some((movie) => movie.title === input.title)) {
-      setRepeatedLiked(true);
-      setTimeout(() => {
-        setRepeatedLiked(null);
-      }, 500);
-    } else {
-      db.collection("favorites").add({
-        movieId: input.id,
-        title: input.title || input.name,
-        vote_average: input.vote_average,
-        image_path: IMG_API + input.poster_path,
-      });
-      setMessage("Added to the favorites");
-      setTimeout(() => {
-        setMessage(null);
-      }, 500);
-    }
-  };
-
-  const fetchMovieList = () => {
-    db.collection("favorites").onSnapshot((q) => {
-      setFavouriteContent(
-        q.docs.map((doc) => ({
-          id: doc.id,
-          title: doc.data().title,
-          poster_path: doc.data().image_path,
-          vote_average: doc.data().vote_average,
-        }))
-      );
-    });
+    props.fetchSearchResults(searchTerm);
   };
 
   return (
     <>
+      {console.log(props.searchResults)}
       <div className="wrap">
         <input
           className="search"
@@ -88,34 +43,42 @@ const Movie = () => {
           onChange={handleSearchTerm}
         />
       </div>
-      {isSearching && (
-        <div style={{ textAlign: "center" }}>
-          <img
-            src={duckSearching}
-            alt="Searching Gif"
-            className="searching-gif"
-          />
-          Searching.......
-        </div>
-      )}
-
       <div className="movie-container">
-        {movies &&
-          movies.map((movie) => (
-            <Cards
-              key={movie.id}
-              {...movie}
-              media_type="movie"
-              handleFavourite={handleFavourite}
+        {isSearching ? (
+          <div style={{ textAlign: "center" }}>
+            <img
+              src={duckSearching}
+              alt="Searching Gif"
+              className="searching-gif"
             />
-          ))}
+            Searching.......
+          </div>
+        ) : (
+          <Cards
+            contentArray={props.searchResults.resultArray.map((element) => ({
+              ...element,
+              media_type: "movie",
+            }))}
+          />
+        )}
       </div>
-      <LikeMessages message={message} />
-      {repeatedLiked && (
-        <div className="snackbar show">Already added in the favourite..</div>
-      )}
     </>
   );
 };
 
-export default Movie;
+const mapStateToProps = (state) => {
+  console.log("State", state.searchMoviesList);
+  return {
+    searchResults: state.searchMoviesList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchSearchResults: (searchTerm) => {
+      dispatch(fetchSearchedMovies(searchTerm));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Movie);

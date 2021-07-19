@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { voteRating } from "../../utilities/checkRating";
 import { movieDbAPI, imgAPI } from "../../apis";
 import Snackbar from "../../components/LikeMessages";
@@ -15,6 +15,7 @@ import { deleteBookmarked } from "../../firebase/deleteBookmarked";
 import { connect } from "react-redux";
 import { fetchDetails } from "../../actions/detailsAction";
 import { fetchBookmarked } from "../../actions/fetchbookmarkedAction";
+import { fetchCredit } from "../../actions/fetchCreditsListAction";
 
 require("dotenv").config();
 
@@ -25,7 +26,6 @@ const MovieDetails = (props) => {
 
   const [video, setVideo] = useState();
   const [linkAvailability, setLinkAvailability] = useState(false);
-  const [credits, setCredits] = useState([]);
   const [message, setMessage] = useState(null);
   const [isFavourite, setIsFavourite] = useState(false);
   const [mediaID, setMediaID] = useState(id.split("_")[0]);
@@ -37,7 +37,7 @@ const MovieDetails = (props) => {
     setMediaType(id.split("_")[1]);
     props.fetchDetails(mediaType, mediaID);
     props.fetchBookmarked();
-    console.log(props);
+    props.fetchCredit(mediaType, mediaID);
 
     const getYoutubeLink = async () => {
       await movieDbAPI
@@ -54,17 +54,6 @@ const MovieDetails = (props) => {
         });
     };
     getYoutubeLink();
-
-    const getCredits = async () => {
-      await movieDbAPI
-        .get(
-          `/${mediaType}/${mediaID}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-        )
-        .then((response) => {
-          setCredits(response.data.cast);
-        });
-    };
-    getCredits();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -98,15 +87,15 @@ const MovieDetails = (props) => {
         (movie) => movie.title === (mediaName.name || mediaName.title)
       );
       deleteBookmarked(newArray[0].id).then(() => {
-        setIsFavourite(!isFavourite);
         props.fetchBookmarked();
         setMessage("Removed from favourites");
+        setIsFavourite(!isFavourite);
       });
     } else {
       addBookmarked({ ...mediaName, mediaType }).then(() => {
-        setIsFavourite(!isFavourite);
         props.fetchBookmarked();
         setMessage("Added to favourites");
+        setIsFavourite(!isFavourite);
       });
     }
   };
@@ -179,20 +168,17 @@ const MovieDetails = (props) => {
         </div>
         <div className="carouselSection">
           <button className="go-back-button" onClick={() => history.goBack()}>
-            <i class="fas fa-angle-left"></i>
+            <i className="fas fa-angle-left"></i>
           </button>
           <h3>Cast Details:</h3>
           <span>Main Cast</span>
-          <Carousel list={credits} />
-          <div className="complete-crew-section">
-            <Link to={"/details/" + id + "/cast"} className="cast-list-link">
-              Full Crew and Cast Members
-            </Link>
-          </div>
+          {props.creditsList.creditsArray.cast && (
+            <Carousel list={props.creditsList.creditsArray.cast} />
+          )}
+          {message && <Snackbar message={message} time={500} />}
         </div>
       </div>
-      {message && <Snackbar message={message} time={500} />}
-      {props.bookMarkedList.loading ? <Spinner /> : ""}
+      {props.bookMarkedList.loading && <Spinner />}
     </>
   );
 };
@@ -201,6 +187,7 @@ const mapStateToProps = (state) => {
   return {
     detailsList: state.detailsList,
     bookMarkedList: state.bookMarkedList,
+    creditsList: state.creditsList,
   };
 };
 
@@ -210,6 +197,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchDetails(mediaType, mediaID));
     },
     fetchBookmarked: () => dispatch(fetchBookmarked()),
+    fetchCredit: (mediaType, mediaID) => {
+      dispatch(fetchCredit(mediaType, mediaID));
+    },
   };
 };
 

@@ -1,32 +1,31 @@
 import {
-  FETCH_DETAILS_REQUEST,
-  FETCH_DETAILS_SUCCESS,
-  FETCH_DETAILS_ERROR,
+  SEARCH_SERIES_REQUEST,
+  SEARCH_SERIES_SUCCESS,
+  SEARCH_SERIES_FAILURE,
 } from "../actionTypes";
 
 const initialState = {
   loading: false,
-  mediaDetails: [],
-  bookmarkedMedia: [],
+  resultArray: [],
   error: "",
 };
 
-export const detailsReducer = (state = initialState, action) => {
+export const searchedSeriesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_DETAILS_REQUEST:
+    case SEARCH_SERIES_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
-    case FETCH_DETAILS_SUCCESS:
+    case SEARCH_SERIES_SUCCESS:
       return {
         ...state,
         loading: false,
-        mediaDetails: action.payload,
+        resultArray: action.payload,
       };
 
-    case FETCH_DETAILS_ERROR:
+    case SEARCH_SERIES_FAILURE:
       return {
         ...state,
         loading: false,
