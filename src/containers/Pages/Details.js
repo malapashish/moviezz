@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { voteRating } from "../../utilities/checkRating";
 import { movieDbAPI, imgAPI } from "../../apis";
-import Snackbar from "../../components/LikeMessages";
 import Carousel from "../../components/Carousel";
 import { Spinner } from "../../components/Spinner";
 import YouTubeButton from "../../components/YouTubeTrailerButton";
 import BookmarkButton from "../../components/BookmarkButton";
+import AWN from "awesome-notifications";
 
 import { addBookmarked } from "../../firebase/addBookmarked";
 import { deleteBookmarked } from "../../firebase/deleteBookmarked";
@@ -24,9 +24,24 @@ const MovieDetails = (props) => {
 
   const history = useHistory();
 
+  const addOptions = {
+    labels: {
+      success: "Added",
+    },
+  };
+
+  let addedNotifier = new AWN(addOptions);
+
+  const removeOptions = {
+    labels: {
+      success: "Removed",
+    },
+  };
+
+  let removeNotifier = new AWN(removeOptions);
+
   const [video, setVideo] = useState();
   const [linkAvailability, setLinkAvailability] = useState(false);
-  const [message, setMessage] = useState(null);
   const [isFavourite, setIsFavourite] = useState(false);
   const [mediaID, setMediaID] = useState(id.split("_")[0]);
   const [mediaType, setMediaType] = useState(id.split("_")[1]);
@@ -88,13 +103,17 @@ const MovieDetails = (props) => {
       );
       deleteBookmarked(newArray[0].id).then(() => {
         props.fetchBookmarked();
-        setMessage("Removed from favourites");
+        removeNotifier.success("Removed from Bookmark", {
+          durations: { success: 2000 },
+        });
         setIsFavourite(!isFavourite);
       });
     } else {
       addBookmarked({ ...mediaName, mediaType }).then(() => {
         props.fetchBookmarked();
-        setMessage("Added to favourites");
+        addedNotifier.success("Added to Bookmark", {
+          durations: { success: 2000 },
+        });
         setIsFavourite(!isFavourite);
       });
     }
@@ -175,7 +194,6 @@ const MovieDetails = (props) => {
           {props.creditsList.creditsArray.cast && (
             <Carousel list={props.creditsList.creditsArray.cast} />
           )}
-          {message && <Snackbar message={message} time={500} />}
         </div>
       </div>
       {props.bookMarkedList.loading && props.detailsList.loading && <Spinner />}
