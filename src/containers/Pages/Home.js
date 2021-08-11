@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchData } from "../../actions/fetchTrendingListAction";
+import { fetchData } from "../../actions/fetchTrendingListAction"; 
 
-import Cards from "../../components/Cards";
-import CustomPagination from "../../components/Pagination";
+import Cards from "../../components/Cards"; 
 import { Spinner } from "../../components/Spinner";
+import PaginationComponent from "../../components/Pagination";
 
 require("dotenv").config();
+ 
 
 const Home = (props) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(sessionStorage.getItem("pagination") || 1);
   useEffect(() => {
     props.fetchTrendList(page);
     window.scroll(0, 0);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
+
+  const handlePaginationChange = (e) => {
+    setPage(parseInt(e.target.textContent));
+    sessionStorage.setItem("pagination", parseInt(e.target.textContent));
+  };
 
   return (
     <>
@@ -25,8 +31,8 @@ const Home = (props) => {
       </span>
       <div className="movie-container">
         <Cards contentArray={props.trendingList.trendingListData} />
-      </div>
-      <CustomPagination setPage={setPage} />
+      </div> 
+      <PaginationComponent handlePaginationChange={handlePaginationChange} />
       {props.trendingList.loading && <Spinner />}
     </>
   );

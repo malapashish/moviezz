@@ -869,6 +869,20 @@ input[type="text"]:focus {
 
 /*****************************Spinner end******************************************/
 
+
+/******************************Pagination Start******************************************/
+.pagination-div{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+/******************************Pagination End******************************************/
+
+
+
+
 /*****************************AWN CSS Start****************************************/
 @keyframes awn-fade-in {
   0% {
