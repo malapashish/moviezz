@@ -5,8 +5,7 @@ import { checkRating } from "../utilities/checkRating";
 const IMG_API = "https://images.tmdb.org/t/p/w300";
 require("dotenv").config();
 
-const Cards = ({ contentArray }) => {
-  console.log(contentArray);
+const Cards = ({ contentArray }) => { 
   return (
     <>
       {contentArray &&
