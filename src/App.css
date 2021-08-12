@@ -350,6 +350,7 @@ input[type="text"]:focus {
   justify-content: center;
   align-items: center;
   background: var(--color-primary);
+  transition: 0.3s all;
 }
 
 
@@ -420,6 +421,7 @@ input[type="text"]:focus {
 .movie-details {
   background: var(--color-primary);
   color: var(--font-color);
+  transition: 0.3s all;
 }
 
 
