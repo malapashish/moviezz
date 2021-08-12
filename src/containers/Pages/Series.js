@@ -34,7 +34,7 @@ const Series = (props) => {
   };
 
   return (
-    <>
+    <div className="search-parent">
       {console.log(props.searchResults)}
       <div className="wrap">
         <input
@@ -64,7 +64,7 @@ const Series = (props) => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

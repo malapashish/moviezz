@@ -120,84 +120,82 @@ const MovieDetails = (props) => {
   };
 
   return (
-    <>
-      <div className="movie-details">
+    <div className="movie-details">
+      <img
+        src={
+          props.detailsList.mediaDetails.backdrop_path
+            ? imgAPI + props.detailsList.mediaDetails.backdrop_path
+            : "https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg"
+        }
+        alt="Backdrop_Images"
+        className="hero-image"
+      />
+      <div className="details-section">
         <img
           src={
-            props.detailsList.mediaDetails.backdrop_path
-              ? imgAPI + props.detailsList.mediaDetails.backdrop_path
+            props.detailsList.mediaDetails.poster_path
+              ? imgAPI + props.detailsList.mediaDetails.poster_path
               : "https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg"
           }
-          alt="Backdrop_Images"
-          className="hero-image"
+          alt="Poster_Image"
+          className="poster-image"
         />
-        <div className="details-section">
-          <img
-            src={
-              props.detailsList.mediaDetails.poster_path
-                ? imgAPI + props.detailsList.mediaDetails.poster_path
-                : "https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-600w-1350441335.jpg"
-            }
-            alt="Poster_Image"
-            className="poster-image"
-          />
-          <div className="information-section">
-            <span className="heading-section">
-              <h3>
-                {props.detailsList.mediaDetails.name ||
-                  props.detailsList.mediaDetails.title}
-              </h3>
-              <BookmarkButton
-                isAlreadyExists={isFavourite}
-                mediaDetails={props.detailsList.mediaDetails}
-                bookmarkedList={props.bookMarkedList.data}
-                handleFavorites={handleFavorites}
-              />
-            </span>
-            <section className="summary-section">
-              <h4 className="summary-title">Summary:</h4>
-              <p className="summary-content">
-                {props.detailsList.mediaDetails.overview}
+        <div className="information-section">
+          <span className="heading-section">
+            <h3>
+              {props.detailsList.mediaDetails.name ||
+                props.detailsList.mediaDetails.title}
+            </h3>
+            <BookmarkButton
+              isAlreadyExists={isFavourite}
+              mediaDetails={props.detailsList.mediaDetails}
+              bookmarkedList={props.bookMarkedList.data}
+              handleFavorites={handleFavorites}
+            />
+          </span>
+          <section className="summary-section">
+            <h4 className="summary-title">Summary:</h4>
+            <p className="summary-content">
+              {props.detailsList.mediaDetails.overview}
+            </p>
+          </section>
+          <section className="movie-stats-section">
+            <section className="movie-release-date">
+              <p>Release Date</p>
+              <p>{props.detailsList.mediaDetails.release_date}</p>
+            </section>
+            <section className="movie-voting-average">
+              <p>Voting Average</p>
+              <p
+                className={`tag ${voteRating(
+                  props.detailsList.mediaDetails.vote_average
+                )}`}
+              >
+                {props.detailsList.mediaDetails.vote_average}
               </p>
             </section>
-            <section className="movie-stats-section">
-              <section className="movie-release-date">
-                <p>Release Date</p>
-                <p>{props.detailsList.mediaDetails.release_date}</p>
-              </section>
-              <section className="movie-voting-average">
-                <p>Voting Average</p>
-                <p
-                  className={`tag ${voteRating(
-                    props.detailsList.mediaDetails.vote_average
-                  )}`}
-                >
-                  {props.detailsList.mediaDetails.vote_average}
-                </p>
-              </section>
-              <section className="movie-trailer">
-                <YouTubeButton
-                  video_id={video}
-                  text="Watch The Trailer"
-                  linkAvailability={linkAvailability}
-                />
-              </section>
+            <section className="movie-trailer">
+              <YouTubeButton
+                video_id={video}
+                text="Watch The Trailer"
+                linkAvailability={linkAvailability}
+              />
             </section>
-          </div>
-        </div>
-        <div className="carouselSection">
-          <button className="go-back-button" onClick={() => history.goBack()}>
-            <i className="fas fa-angle-left"></i>
-          </button>
-          <h3>Cast Details:</h3>
-          <span>Main Cast</span>
-          {props.creditsList.creditsArray.cast && (
-            <Carousel list={props.creditsList.creditsArray.cast} />
-          )}
+          </section>
         </div>
       </div>
+      <div className="carouselSection">
+        <button className="go-back-button" onClick={() => history.goBack()}>
+          <i className="fas fa-angle-left"></i>
+        </button>
+        <h3>Cast Details:</h3>
+        <span>Main Cast</span>
+        {props.creditsList.creditsArray.cast && (
+          <Carousel list={props.creditsList.creditsArray.cast} />
+        )}
+      </div>
       {props.bookMarkedList.loading && props.detailsList.loading && <Spinner />}
-    </>
+    </div>
   );
 };
 

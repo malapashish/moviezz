@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import "./App.css";
+import "./AWN.css";
 import Home from "./containers/Pages/Home";
 import Favourites from "./containers/Pages/Favourites";
 import Details from "./containers/Pages/Details";

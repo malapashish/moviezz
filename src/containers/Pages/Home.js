@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchData } from "../../actions/fetchTrendingListAction"; 
 
-import Cards from "../../components/Cards"; 
+import Cards from "../../components/Cards";
 import { Spinner } from "../../components/Spinner";
 import PaginationComponent from "../../components/Pagination";
 
 require("dotenv").config();
- 
 
 const Home = (props) => {
   const [page, setPage] = useState(sessionStorage.getItem("pagination") || 1);
@@ -24,17 +23,19 @@ const Home = (props) => {
   };
 
   return (
-    <>
+    <div className = 'trending-parent'>
       <span className="page-heading">
         <i className="fas fa-fire"></i>
         Trending
       </span>
+
       <div className="movie-container">
         <Cards contentArray={props.trendingList.trendingListData} />
-      </div> 
+      </div>
       <PaginationComponent handlePaginationChange={handlePaginationChange} />
+
       {props.trendingList.loading && <Spinner />}
-    </>
+    </div>
   );
 };
 

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IconContext } from "react-icons";
-import { FaAlignJustify } from "react-icons/fa";
+import { FaAlignJustify } from "react-icons/fa"; 
+
+import ThemeToggle from "../components/ThemeToggle";
 
 const NavBar = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -24,6 +26,7 @@ const NavBar = () => {
       <NavLink to="/tv" className="nav-link" activeClassName="active">
         Series
       </NavLink>
+      <ThemeToggle />
       <IconContext.Provider value={{ size: "30px" }}>
         <div className="hamburger-icon" onClick={hamburgerClickHandler}>
           <FaAlignJustify />
