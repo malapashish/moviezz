@@ -347,7 +347,7 @@ input[type="text"]:focus {
   display: flex;
   margin-top: 5%;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: var(--color-primary);
   transition: 0.3s all;
@@ -443,16 +443,23 @@ input[type="text"]:focus {
   position: absolute;
 }
 
-.tag .orange {
+.orange > .MuiBadge-badge{
+  background-color: orange;
+  color: white;
+}
+
+.orange { 
   color: orange;
 }
 
-.tag .red {
-  color: red;
+.red > .MuiBadge-badge {
+  background-color: red;
+  color: white;
 }
 
-.tag .green {
-  color: green;
+.green > .MuiBadge-badge {
+  background-color: green;
+  color: white;
 }
 
 .details-section {

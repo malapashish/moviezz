@@ -12,8 +12,8 @@ const Cards = ({ contentArray }) => {
         contentArray.map((media) => (
           <div className="card-container" key={media.id}>
             <Badge
-              badgeContent={media.vote_average}
-              color={checkRating(media.vote_average)}
+              badgeContent={media.vote_average} 
+              className = {`${checkRating(media.vote_average)}`}
             >
               <Link to={`/details/${media.id + "_" + media.media_type}`}>
                 <img
