@@ -1,9 +1,10 @@
 {
-    "cSpell.words": [
-        "Favourite",
-        "Youtube",
-        "moviedetails",
-        "noreferrer",
-        "seriesdetails"
-    ]
+  "cSpell.words": [
+    "Favourite",
+    "Youtube",
+    "moviedetails",
+    "noreferrer",
+    "seriesdetails"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
